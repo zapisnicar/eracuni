@@ -45,9 +45,12 @@ def find_all_css(browser, target):
 
 with open('config.yaml') as f:
     CONFIG = yaml.full_load(f)
-with open('storage.yaml') as f:
-    STORAGE = yaml.full_load(f)
 
+if os.path.isfile('storage.yaml'):
+    with open('storage.yaml') as f:
+        STORAGE = yaml.full_load(f)
+else:
+    STORAGE = {'last_period': None}
 
 my_options = Options()
 if CONFIG['headless']:
