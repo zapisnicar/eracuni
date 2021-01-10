@@ -6,6 +6,7 @@ portal.edb.rs
 
 
 import os
+import platform
 import sys
 import yaml
 from selenium import webdriver
@@ -43,34 +44,63 @@ def find_all_css(browser, target):
         sys.exit(1)
 
 
+def gecko_path():
+    my_system = platform.system()
+    my_machine = platform.machine()
+    exe_path = ''
+    if my_system == 'Linux':
+        if my_machine == 'x86_64':
+            # Linux PC
+            exe_path = r'bin/linux64/geckodriver'
+        elif my_machine == 'armv7l':
+            # Linux Raspberry Pi
+            exe_path = r'bin/arm7hf/geckodriver'
+        else:
+            # No idea
+            pass
+    elif my_system == "windows":
+        # Windows
+        execpath = r'bin/win64/geckodriver.exe'
+    elif my_system == "darwin":
+        # Mac
+        pass
+    else:
+        # No idea
+        pass
+    return exe_path
+
+
+def start_browser(cfg):
+    my_options = Options()
+    if cfg['headless']:
+        my_options.headless = True
+        my_options.add_argument(cfg['headless_window_size'])
+    my_profile = webdriver.FirefoxProfile()
+    my_profile.set_preference('general.useragent.override', cfg['user_agent'])
+    my_profile.set_preference('browser.download.folderList', 2)
+    my_profile.set_preference('browser.download.manager.showWhenStarting', False)
+    my_profile.set_preference('browser.download.manager.useWindow', False)
+    my_profile.set_preference('pdfjs.disabled', True)
+    my_profile.set_preference('browser.download.dir',
+                              os.path.join(os.getcwd(), cfg['download_dir']))
+    my_profile.set_preference('browser.helperApps.neverAsk.openFile',
+                              'application/octet-stream, application/pdf, application/x-www-form-urlencoded')
+    my_profile.set_preference('browser.helperApps.neverAsk.saveToDisk',
+                              'application/octet-stream, application/pdf, application/x-www-form-urlencoded')
+
+    return webdriver.Firefox(executable_path=gecko_path(), options=my_options, firefox_profile=my_profile)
+
+
 with open('config.yaml') as f:
     CONFIG = yaml.full_load(f)
-
 if os.path.isfile('storage.yaml'):
     with open('storage.yaml') as f:
         STORAGE = yaml.full_load(f)
 else:
     STORAGE = {'last_period': 'none'}
 
-my_options = Options()
-if CONFIG['headless']:
-    my_options.headless = True
-    my_options.add_argument(CONFIG['headless_window_size'])
-my_profile = webdriver.FirefoxProfile()
-my_profile.set_preference('general.useragent.override', CONFIG['user_agent'])
-my_profile.set_preference('browser.download.folderList', 2)
-my_profile.set_preference('browser.download.manager.showWhenStarting', False)
-my_profile.set_preference('browser.download.manager.useWindow', False)
-my_profile.set_preference('pdfjs.disabled', True)
-my_profile.set_preference('browser.download.dir',
-                          os.path.join(os.getcwd(), CONFIG['download_dir']))
-my_profile.set_preference('browser.helperApps.neverAsk.openFile',
-                          'application/octet-stream, application/pdf, application/x-www-form-urlencoded')
-my_profile.set_preference('browser.helperApps.neverAsk.saveToDisk',
-                          'application/octet-stream, application/pdf, application/x-www-form-urlencoded')
+driver = start_browser(CONFIG)
 
-
-driver = webdriver.Firefox(options=my_options, firefox_profile=my_profile)
 # Load URL
 try:
     driver.get(CONFIG['url'])
