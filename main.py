@@ -50,7 +50,7 @@ if os.path.isfile('storage.yaml'):
     with open('storage.yaml') as f:
         STORAGE = yaml.full_load(f)
 else:
-    STORAGE = {'last_period': None}
+    STORAGE = {'last_period': 'none'}
 
 my_options = Options()
 if CONFIG['headless']:
