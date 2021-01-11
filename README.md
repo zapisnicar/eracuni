@@ -2,11 +2,11 @@
 
 ### Namena:
 
-- Skini poslednji račun za struju, za fizička lica sa portala:
+- Skini poslednji račun za struju, za fizička lica, sa portala:
 
 http://portal.edb.rs
 
-- Smesti PDF račun u data/ subfolder.
+- Snimi PDF račun u data/ subfolder.
 
 - Zapamti koji je poslednji skinuti račun, u storage.yaml
 
@@ -27,6 +27,14 @@ pip install -r requirements.txt
 - Preimenuj config.yaml.DEFAULT u config.yaml
 
 - Edituj config.yaml i upiši svoje ime i šifru.
+
+- Startuj program sa:
+
+```
+python main.py
+    ili
+python3 main.py
+```
 
 ### Platforme:
 
