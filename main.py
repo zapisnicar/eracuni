@@ -45,9 +45,9 @@ class Storage:
         if os.path.isfile('storage.yaml'):
             with open('storage.yaml') as fin:
                 my_storage = yaml.full_load(fin)
+            self.last_period = my_storage['last_period']
         else:
-            my_storage = {'last_period': 'none'}
-        self.last_period = my_storage['last_period']
+            self.last_period = 'none'
 
     def write(self):
         my_storage = {'last_period': self.last_period}
@@ -77,11 +77,11 @@ def find_first_css(browser, target):
 
 def find_all_css(browser, target):
     try:
-        element = browser.find_elements_by_css_selector(target)
-        return element
+        elements = browser.find_elements_by_css_selector(target)
+        return elements
     except NoSuchElementException:
         print(f"Can't find CSS selector: {target}")
-        # browser.quit()
+        browser.quit()
         sys.exit(1)
 
 
@@ -174,7 +174,7 @@ if __name__ == '__main__':
     last_period = storage.last_period.strip()
     if period != last_period:
         print(period)
-        # Save PDF
+        # Save PDF with click on last cell in row 1
         save_button = find_first_css(invoices[1], 'td:last-child')
         save_button.click()
         # Save period as last_period in storage.yaml

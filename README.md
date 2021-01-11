@@ -2,7 +2,7 @@
 
 ### Namena:
 
-- Skini poslednji račun za struju, za fizička lica, sa portala http://portal.edb.rs
+- Skini poslednji račun za struju, za fizička lica, sa http://portal.edb.rs
 
 - Snimi PDF račun u data/ subfolder.
 
@@ -46,6 +46,6 @@ python main.py
 
 - Radi na Linux x64, Windows x64 i Raspbian arm7hf platformama.
 
-- Za MacOS, prouči rešenje problema notarizacije:
+- Za MacOS, prouči rešenje problema notarizacije, nije testirano:
 
 https://firefox-source-docs.mozilla.org/testing/geckodriver/Notarization.html
