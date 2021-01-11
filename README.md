@@ -1,4 +1,4 @@
-# EPS račun - Electric bill (Serbian)
+# EPS račun - Electric bill scraper (Serbian)
 
 ### Namena:
 
