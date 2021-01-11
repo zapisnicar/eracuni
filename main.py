@@ -60,7 +60,7 @@ def gecko_path():
             pass
     elif my_system == "windows":
         # Windows
-        execpath = r'bin/win64/geckodriver.exe'
+        exe_path = r'bin/win64/geckodriver.exe'
     elif my_system == "darwin":
         # Mac
         pass
