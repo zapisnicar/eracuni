@@ -1,7 +1,14 @@
 #!/usr/bin/env python3
 """
-Pregled računa za struju, za fizička lica:
+Skini poslednji račun za struju, za fizička lica:
 portal.edb.rs
+
+Username i šifra su u config.yaml.
+
+Smesti PDF račun u data/ subfolder.
+Zapamti koji je poslednji skinuti račun, u storage.yaml
+Ako nema novog računa, završi program.
+Ako je došlo do promena u sajtu, ispiši problem na stdout i izađi sa statusnim kodom 1
 """
 
 
@@ -48,25 +55,25 @@ def gecko_path():
     my_system = platform.system()
     my_machine = platform.machine()
     exe_path = ''
-    if my_system == 'Linux':
-        if my_machine == 'x86_64':
-            # Linux PC
-            exe_path = r'bin/linux64/geckodriver'
-        elif my_machine == 'armv7l':
-            # Linux Raspberry Pi
-            exe_path = r'bin/arm7hf/geckodriver'
-        else:
-            # No idea
-            pass
+    if my_system == 'Linux' and my_machine == 'x86_64':
+        # Linux PC
+        exe_path = r'bin/linux64/geckodriver'
+    elif my_system == 'Linux' and my_machine == 'armv7l':
+        # Linux Raspberry Pi
+        exe_path = r'bin/arm7hf/geckodriver'
     elif my_system == "windows":
         # Windows
         exe_path = r'bin/win64/geckodriver.exe'
     elif my_system == "darwin":
         # Mac
-        pass
+        # Notarization Workaround:
+        # https://firefox-source-docs.mozilla.org/testing/geckodriver/Notarization.html
+        exe_path = r'bin/macos/geckodriver'
     else:
         # No idea
-        pass
+        print(f"Unknown OS: {my_system}/{my_machine}")
+        sys.exit(1)
+
     return exe_path
 
 
