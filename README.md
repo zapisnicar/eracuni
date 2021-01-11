@@ -17,6 +17,7 @@
 - Potreban je prethodno instaliran Python 3.6+ i Firefox
 
 ```
+sudo apt update
 sudo apt install python3 python3-dev python3-venv
 sudo apt install firefox-esr
 ```
@@ -24,9 +25,9 @@ sudo apt install firefox-esr
 - Instaliraj module iz requirements.txt:
 
 ```
-pip install -r requirements.txt
-    ili
 pip3 install -r requirements.txt
+    ili
+pip install -r requirements.txt
 ```
 
 - Preimenuj config.yaml.DEFAULT u config.yaml
@@ -36,9 +37,9 @@ pip3 install -r requirements.txt
 - Startuj program sa:
 
 ```
-python main.py
-    ili
 python3 main.py
+    ili
+python main.py
 ```
 
 ### Platforme:
