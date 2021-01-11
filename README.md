@@ -2,9 +2,7 @@
 
 ### Namena:
 
-- Skini poslednji račun za struju, za fizička lica, sa portala:
-
-http://portal.edb.rs
+- Skini poslednji račun za struju, za fizička lica, sa portala http://portal.edb.rs
 
 - Snimi PDF račun u data/ subfolder.
 
@@ -19,7 +17,7 @@ http://portal.edb.rs
 - Potreban je prethodno instaliran Python 3.6+ i Firefox
 
 ```
-sudo apt install python3.x python3.x-dev python3.x-venv
+sudo apt install python3 python3-dev python3-venv
 sudo apt install firefox-esr
 ```
 
