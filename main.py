@@ -28,8 +28,7 @@ class Config:
     def __init__(self):
         with open('config.yaml') as f:
             cfg = yaml.full_load(f)
-        self.username = cfg['username']
-        self.password = cfg['password']
+        self.accounts = cfg['accounts']
         self.url = cfg['url']
         self.download_dir = cfg['download_dir']
         self.headless = cfg['headless']
@@ -42,8 +41,8 @@ class Storage:
     Storage
     """
     def __init__(self):
-        if os.path.isfile('storage.yaml'):
-            with open('storage.yaml') as fin:
+        if os.path.isfile('data/storage.yaml'):
+            with open('data/storage.yaml') as fin:
                 my_storage = yaml.full_load(fin)
             self.last_period = my_storage['last_period']
         else:
@@ -51,7 +50,7 @@ class Storage:
 
     def write(self):
         my_storage = {'last_period': self.last_period}
-        with open('storage.yaml', 'w') as fout:
+        with open('data/storage.yaml', 'w') as fout:
             yaml.dump(my_storage, fout)
 
 
@@ -135,53 +134,59 @@ if __name__ == '__main__':
     config = Config()
     storage = Storage()
 
-    # Start browser
-    driver = start_browser(config)
+    for account in config.accounts:
+        username = str(account['username'])
+        password = str(account['password'])
+        if username == 'None':
+            continue
 
-    # Load page
-    try:
-        driver.get(config.url)
-    except Exception as e:
-        print('Error loading page')
+        # Start browser
+        driver = start_browser(config)
+
+        # Load page
+        try:
+            driver.get(config.url)
+        except Exception as e:
+            print('Error loading page')
+            driver.quit()
+            sys.exit(1)
+
+        # Login
+        login_name = find_first_id(driver, 'j_username')
+        login_name.send_keys(username)
+        login_password = find_first_id(driver, 'j_password')
+        login_password.send_keys(password)
+        login_button = find_first_id(driver, 'cbPrihvati')
+        login_button.click()
+
+        # Choose: Main page > Računi
+        choose_racuni = find_first_css(driver, 'a[title="Pregled računa"]')
+        choose_racuni.click()
+
+        # Invoices table
+        invoices = find_all_css(driver, 'table.x2f tbody tr')
+        # Skip first row [0] as header
+        # Last period is in second cell of second row [1]
+        if len(invoices) > 1:
+            last_invoice = invoices[1]
+            period = find_first_css(last_invoice, 'td:nth-child(2)').text.strip()
+        else:
+            print("Can't find table with invoices")
+            driver.quit()
+            sys.exit(1)
+
+        # Anything new?
+        last_period = storage.last_period.strip()
+        if period != last_period:
+            print(period)
+            # Save PDF with click on last cell in row 1
+            save_button = find_first_css(invoices[1], 'td:last-child')
+            save_button.click()
+            # Save period as last_period in storage.yaml
+            storage.last_period = period
+            storage.write()
+
+        # Logout
+        logout_button = find_first_css(driver, 'a[title="Odjavljivanje sa sistema"]')
+        logout_button.click()
         driver.quit()
-        sys.exit(1)
-
-    # Login
-    login_name = find_first_id(driver, 'j_username')
-    login_name.send_keys(config.username)
-    login_password = find_first_id(driver, 'j_password')
-    login_password.send_keys(config.password)
-    login_button = find_first_id(driver, 'cbPrihvati')
-    login_button.click()
-
-    # Choose: Main page > Računi
-    choose_racuni = find_first_css(driver, 'a[title="Pregled računa"]')
-    choose_racuni.click()
-
-    # Invoices table
-    invoices = find_all_css(driver, 'table.x2f tbody tr')
-    # Skip first row [0] as header
-    # Last period is in second cell of second row [1]
-    if len(invoices) > 1:
-        last_invoice = invoices[1]
-        period = find_first_css(last_invoice, 'td:nth-child(2)').text.strip()
-    else:
-        print("Can't find table with invoices")
-        driver.quit()
-        sys.exit(1)
-
-    # Anything new?
-    last_period = storage.last_period.strip()
-    if period != last_period:
-        print(period)
-        # Save PDF with click on last cell in row 1
-        save_button = find_first_css(invoices[1], 'td:last-child')
-        save_button.click()
-        # Save period as last_period in storage.yaml
-        storage.last_period = period
-        storage.write()
-
-    # Logout
-    logout_button = find_first_css(driver, 'a[title="Odjavljivanje sa sistema"]')
-    logout_button.click()
-    driver.quit()
