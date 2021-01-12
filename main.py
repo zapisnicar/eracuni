@@ -94,10 +94,10 @@ def gecko_path():
     elif my_system == 'Linux' and my_machine == 'armv7l':
         # Linux Raspberry Pi
         exe_path = r'bin/arm7hf/geckodriver'
-    elif my_system == "windows":
+    elif my_system == "Windows":
         # Windows
         exe_path = r'bin/win64/geckodriver.exe'
-    elif my_system == "darwin":
+    elif my_system == "Darwin":
         # Mac
         # Notarization Workaround:
         # https://firefox-source-docs.mozilla.org/testing/geckodriver/Notarization.html
