@@ -30,9 +30,7 @@ class Config:
             cfg = yaml.full_load(f)
         self.accounts = cfg['accounts']
         self.url = cfg['url']
-        self.download_dir = cfg['download_dir']
         self.headless = cfg['headless']
-        self.headless_window_size = cfg['headless_window_size']
         self.user_agent = cfg['user_agent']
 
 
@@ -113,7 +111,7 @@ def start_browser(cfg):
     my_options = Options()
     if cfg.headless:
         my_options.headless = True
-        my_options.add_argument(cfg.headless_window_size)
+        my_options.add_argument('--window-size=1920,1200')
     my_profile = webdriver.FirefoxProfile()
     my_profile.set_preference('general.useragent.override', cfg.user_agent)
     my_profile.set_preference('browser.download.folderList', 2)
@@ -121,7 +119,7 @@ def start_browser(cfg):
     my_profile.set_preference('browser.download.manager.useWindow', False)
     my_profile.set_preference('pdfjs.disabled', True)
     my_profile.set_preference('browser.download.dir',
-                              os.path.join(os.getcwd(), cfg.download_dir))
+                              os.path.join(os.getcwd(), 'pdf'))
     my_profile.set_preference('browser.helperApps.neverAsk.openFile',
                               'application/octet-stream, application/pdf, application/x-www-form-urlencoded')
     my_profile.set_preference('browser.helperApps.neverAsk.saveToDisk',
