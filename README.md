@@ -4,7 +4,7 @@
 
 - Skini poslednji račun za struju, za fizička lica, sa http://portal.edb.rs
 
-- Snimi PDF račun u data/ subfolder.
+- Snimi PDF račun u data subfolder.
 
 - Zapamti koji je poslednji skinuti račun, u storage.yaml
 
