@@ -2,11 +2,11 @@
 
 ### Namena:
 
-- Skini poslednji račun za struju, za fizička lica, sa http://portal.edb.rs
+- Pronađi poslednji račun za struju (za fizička lica) sa http://portal.edb.rs
 
-- Snimi PDF račun u data subfolder.
+- Snimi PDF račun u pdf subfolder.
 
-- Zapamti koji je poslednji skinuti račun, u storage.yaml
+- Zapamti koji je poslednji skinuti račun, u data/storage.yaml
 
 - Ako nema novog računa, završi program.
 
