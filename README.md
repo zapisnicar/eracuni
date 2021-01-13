@@ -24,7 +24,7 @@ sudo apt install python3 python3-dev python3-venv
 sudo apt install firefox-esr
 ```
 
-- Preuzmi program sa ove stranice kao zip arhivu, koji zatim otpakuješ u željeni folder. Ili koristi git:
+- Preuzmi program sa ove stranice kao zip arhivu i otpakuj je u željeni folder. Ili koristi git:
 
 ```
 git clone git@github.com:zapisnicar/epsracun.git

@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 """
-Skini poslednji račun za struju, za fizička lica:
-portal.edb.rs
+EPS račun - Electric bill scraper (Serbian)
 
-Username i šifra su u config.yaml.
+- Samo za distributivno područje Beograd
 
-Smesti PDF račun u pdf subfolder.
-Zapamti koji je poslednji skinuti račun, u data/storage.yaml
+Pronađi poslednji račun za struju (za fizička lica) sa http://portal.edb.rs
 Ako nema novog računa, završi program.
-Ako je došlo do promena u sajtu, ispiši problem na stderr i izađi sa statusnim kodom 1
+Ako ima, snimi račun u pdf folder.
+Zapamti koji je poslednji skinuti račun, u data/storage.yaml
+Ako je došlo do greške u parsiranju web stranice, ispiši problem na stderr i izađi sa statusnim kodom 1.
 """
 
 
