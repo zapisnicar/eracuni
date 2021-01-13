@@ -40,7 +40,7 @@ pip install -r requirements.txt
 
 - Preimenuj config.yaml.DEFAULT u config.yaml
 
-- Edituj config.yaml i upiši svoje ime, šifru i opciono alias. Može se koristiti proizvoljan broj naloga. Moraju biti u YAML formatu, a neaktivni nalozi trebaju ili da se obrišu ili da imaju prazan string za username. Alias će se koristiti za snimanje fajlova, kao prefiks, recimo "stan" ili "garaza". Mora biti jedinstven.
+- Edituj config.yaml i upiši svoje ime, šifru i opciono alijas. Može se koristiti proizvoljan broj naloga. Moraju biti u YAML formatu, a neaktivni nalozi trebaju ili da se obrišu ili da imaju prazan string za username. Alijas će se koristiti kao prefiks pri snimanju fajlova, recimo "stan" ili "garaza". Mora biti jedinstven.
 
 - Startuj program sa:
 
