@@ -1,5 +1,7 @@
 # EPS račun - Electric bill scraper (Serbian)
 
+- Samo za distributivno područje Beograd
+
 ### Namena:
 
 - Pronađi poslednji račun za struju (za fizička lica) sa http://portal.edb.rs
@@ -32,7 +34,7 @@ pip install -r requirements.txt
 
 - Preimenuj config.yaml.DEFAULT u config.yaml
 
-- Edituj config.yaml i upiši svoje ime i šifru.
+- Edituj config.yaml i upiši svoje ime i šifru. Može se koristiti proizvoljan broj naloga. Moraju biti u YAML formatu, a neaktivni nalozi trebaju ili da se obrišu ili da imaju prazan string za username.
 
 - Startuj program sa:
 

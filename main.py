@@ -5,8 +5,8 @@ portal.edb.rs
 
 Username i šifra su u config.yaml.
 
-Smesti PDF račun u data/ subfolder.
-Zapamti koji je poslednji skinuti račun, u storage.yaml
+Smesti PDF račun u pdf subfolder.
+Zapamti koji je poslednji skinuti račun, u data/storage.yaml
 Ako nema novog računa, završi program.
 Ako je došlo do promena u sajtu, ispiši problem na stdout i izađi sa statusnim kodom 1
 """
@@ -15,7 +15,9 @@ Ako je došlo do promena u sajtu, ispiši problem na stdout i izađi sa statusni
 import os
 import platform
 import sys
+import shutil
 import yaml
+from pathlib import Path
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
 from selenium.common.exceptions import NoSuchElementException
@@ -38,9 +40,10 @@ class Storage:
     """
     Storage
     """
-    def __init__(self):
-        if os.path.isfile('data/storage.yaml'):
-            with open('data/storage.yaml') as fin:
+    def __init__(self, user):
+        self.file_path = f'data/storage_{user}.yaml'
+        if os.path.isfile(self.file_path):
+            with open(self.file_path) as fin:
                 my_storage = yaml.full_load(fin)
             self.last_period = my_storage['last_period']
         else:
@@ -48,7 +51,7 @@ class Storage:
 
     def write(self):
         my_storage = {'last_period': self.last_period}
-        with open('data/storage.yaml', 'w') as fout:
+        with open(self.file_path, 'w') as fout:
             yaml.dump(my_storage, fout)
 
 
@@ -119,7 +122,7 @@ def start_browser(cfg):
     my_profile.set_preference('browser.download.manager.useWindow', False)
     my_profile.set_preference('pdfjs.disabled', True)
     my_profile.set_preference('browser.download.dir',
-                              os.path.join(os.getcwd(), 'pdf'))
+                              os.path.join(os.getcwd(), 'temp'))
     my_profile.set_preference('browser.helperApps.neverAsk.openFile',
                               'application/octet-stream, application/pdf, application/x-www-form-urlencoded')
     my_profile.set_preference('browser.helperApps.neverAsk.saveToDisk',
@@ -128,15 +131,21 @@ def start_browser(cfg):
     return webdriver.Firefox(executable_path=gecko_path(), options=my_options, firefox_profile=my_profile)
 
 
+def move_and_rename_pdf(user):
+    for pdf_file in Path('temp').glob('**/*.pdf'):
+        new_path = 'pdf/' + user + '_' + pdf_file.stem + '.pdf'
+        shutil.move(pdf_file, new_path)
+
+
 if __name__ == '__main__':
     config = Config()
-    storage = Storage()
 
     for account in config.accounts:
         username = str(account['username'])
         password = str(account['password'])
         if username == 'None':
             continue
+        storage = Storage(username)
 
         # Start browser
         driver = start_browser(config)
@@ -176,13 +185,15 @@ if __name__ == '__main__':
         # Anything new?
         last_period = storage.last_period.strip()
         if period != last_period:
-            print(period)
+            print(f'{username} - {period}')
             # Save PDF with click on last cell in row 1
             save_button = find_first_css(invoices[1], 'td:last-child')
             save_button.click()
             # Save period as last_period in storage.yaml
             storage.last_period = period
             storage.write()
+            # Move PDF file from temp to pdf folder
+            move_and_rename_pdf(username)
 
         # Logout
         logout_button = find_first_css(driver, 'a[title="Odjavljivanje sa sistema"]')
