@@ -16,6 +16,7 @@ import os
 import platform
 import sys
 import shutil
+from datetime import date
 import yaml
 from pathlib import Path
 from selenium import webdriver
@@ -131,10 +132,11 @@ def start_browser(cfg):
     return webdriver.Firefox(executable_path=gecko_path(), options=my_options, firefox_profile=my_profile)
 
 
-def move_and_rename_pdf(user):
-    # TODO use alias and YYYYMM for PDF file name
+def move_and_rename_pdf(name):
+    # Use alias and YYYYMM for PDF file name
+    today = date.today().strftime('%Y%m')
     for pdf_file in Path('data').glob('**/*.pdf'):
-        new_path = 'pdf/' + user + '_' + pdf_file.stem + '.pdf'
+        new_path = f'pdf/{name}_{today}_{pdf_file.stem}.pdf'
         shutil.move(pdf_file, new_path)
 
 
@@ -144,9 +146,13 @@ if __name__ == '__main__':
     for account in config.accounts:
         username = str(account['username'])
         password = str(account['password'])
+        alias = str(account['alias'])
         if username == 'None':
             continue
-        storage = Storage(username)
+        if alias == 'None':
+            alias = username
+
+        storage = Storage(alias)
 
         # Start browser
         driver = start_browser(config)
@@ -186,7 +192,7 @@ if __name__ == '__main__':
         # Anything new?
         last_period = storage.last_period.strip()
         if period != last_period:
-            print(f'{username} - {period}')
+            print(f'{alias} - {period}')
             # Save PDF with click on last cell in row 1
             save_button = find_first_css(invoices[1], 'td:last-child')
             save_button.click()
@@ -194,7 +200,7 @@ if __name__ == '__main__':
             storage.last_period = period
             storage.write()
             # Move PDF file from data to pdf folder
-            move_and_rename_pdf(username)
+            move_and_rename_pdf(alias)
 
         # Logout
         logout_button = find_first_css(driver, 'a[title="Odjavljivanje sa sistema"]')
