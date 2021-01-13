@@ -8,7 +8,7 @@
 
 - Ako nema novog računa, završi program.
   
-- Snimi novi račun u pdf subfolder.
+- Ako ima, snimi račun u pdf folder.
 
 - Zapamti koji je poslednji skinuti račun, u data/storage.yaml
 
@@ -40,7 +40,7 @@ pip install -r requirements.txt
 
 - Preimenuj config.yaml.DEFAULT u config.yaml
 
-- Edituj config.yaml i upiši svoje ime, šifru i opciono alijas. Može se koristiti proizvoljan broj naloga. Moraju biti u YAML formatu, a neaktivni nalozi trebaju ili da se obrišu ili da imaju prazan string za username. Alijas će se koristiti kao prefiks pri snimanju fajlova, recimo "stan" ili "garaza". Mora biti jedinstven.
+- Edituj config.yaml i upiši svoj ID, šifru i opciono alijas. Može se koristiti proizvoljan broj naloga. Moraju biti u YAML formatu, a neaktivni nalozi trebaju ili da se obrišu ili da imaju prazan string za username. Alijas će se koristiti kao prefiks pri snimanju fajlova, recimo "stan" ili "garaža". Mora biti jedinstven.
 
 - Startuj program sa:
 

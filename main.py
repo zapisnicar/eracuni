@@ -141,7 +141,10 @@ def move_and_rename_pdf(name):
 
 
 if __name__ == '__main__':
+
     config = Config()
+    # Start browser
+    driver = start_browser(config)
 
     for account in config.accounts:
         username = str(account['username'])
@@ -153,9 +156,6 @@ if __name__ == '__main__':
             alias = username
 
         storage = Storage(alias)
-
-        # Start browser
-        driver = start_browser(config)
 
         # Load page
         try:
@@ -196,14 +196,15 @@ if __name__ == '__main__':
             # Save PDF with click on last cell in row 1
             save_button = find_first_css(invoices[1], 'td:last-child')
             save_button.click()
+            # Move saved PDF file from data to pdf folder
+            move_and_rename_pdf(alias)
             # Save period as last_period in storage.yaml
             storage.last_period = period
             storage.write()
-            # Move PDF file from data to pdf folder
-            move_and_rename_pdf(alias)
 
         # Logout
         logout_button = find_first_css(driver, 'a[title="Odjavljivanje sa sistema"]')
         logout_button.click()
-        # TODO don't quit browser ater every account, just at the end of the program
-        driver.quit()
+
+    # Quit browser
+    driver.quit()
