@@ -1,10 +1,13 @@
 accounts:
   - username: some_id
     password: some_password
+    alias: home
   - username:
     password:
+    alias:
   - username:
     password:
+    alias:
 url: http://portal.edb.rs/domportal_js/faces/common/Login.jspx
 headless: True
 user_agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/10.0

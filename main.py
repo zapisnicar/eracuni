@@ -122,7 +122,7 @@ def start_browser(cfg):
     my_profile.set_preference('browser.download.manager.useWindow', False)
     my_profile.set_preference('pdfjs.disabled', True)
     my_profile.set_preference('browser.download.dir',
-                              os.path.join(os.getcwd(), 'temp'))
+                              os.path.join(os.getcwd(), 'data'))
     my_profile.set_preference('browser.helperApps.neverAsk.openFile',
                               'application/octet-stream, application/pdf, application/x-www-form-urlencoded')
     my_profile.set_preference('browser.helperApps.neverAsk.saveToDisk',
@@ -132,7 +132,7 @@ def start_browser(cfg):
 
 
 def move_and_rename_pdf(user):
-    for pdf_file in Path('temp').glob('**/*.pdf'):
+    for pdf_file in Path('data').glob('**/*.pdf'):
         new_path = 'pdf/' + user + '_' + pdf_file.stem + '.pdf'
         shutil.move(pdf_file, new_path)
 
@@ -192,7 +192,7 @@ if __name__ == '__main__':
             # Save period as last_period in storage.yaml
             storage.last_period = period
             storage.write()
-            # Move PDF file from temp to pdf folder
+            # Move PDF file from data to pdf folder
             move_and_rename_pdf(username)
 
         # Logout
