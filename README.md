@@ -6,17 +6,17 @@
 
 - Pronađi poslednji račun za struju (za fizička lica) sa http://portal.edb.rs
 
-- Snimi PDF račun u pdf subfolder.
+- Ako nema novog računa, završi program.
+  
+- Snimi novi račun u pdf subfolder.
 
 - Zapamti koji je poslednji skinuti račun, u data/storage.yaml
-
-- Ako nema novog računa, završi program.
 
 - Ako je došlo do greške u parsiranju web stranice, ispiši problem na stdout i izađi sa statusnim kodom 1.
 
 ### Instalacija:
 
-- Potreban je prethodno instaliran Python 3.6+ i Firefox
+- Potrebni su prethodno instalirani Python 3.6+ i Firefox, primer za Linux:
 
 ```
 sudo apt update
@@ -24,7 +24,13 @@ sudo apt install python3 python3-dev python3-venv
 sudo apt install firefox-esr
 ```
 
-- Instaliraj module iz requirements.txt:
+- Preuzmi program sa ove stranice kao zip arhivu, koji zatim otpakuješ u željeni folder. Ili koristi git:
+
+```
+git clone git@github.com:zapisnicar/epsracun.git
+```
+
+- Instaliraj neophodne module:
 
 ```
 pip3 install -r requirements.txt
@@ -34,7 +40,7 @@ pip install -r requirements.txt
 
 - Preimenuj config.yaml.DEFAULT u config.yaml
 
-- Edituj config.yaml i upiši svoje ime i šifru. Može se koristiti proizvoljan broj naloga. Moraju biti u YAML formatu, a neaktivni nalozi trebaju ili da se obrišu ili da imaju prazan string za username.
+- Edituj config.yaml i upiši svoje ime, šifru i opciono alias. Može se koristiti proizvoljan broj naloga. Moraju biti u YAML formatu, a neaktivni nalozi trebaju ili da se obrišu ili da imaju prazan string za username. Alias će se koristiti za snimanje fajlova, kao prefiks, recimo "stan" ili "garaza". Mora biti jedinstven.
 
 - Startuj program sa:
 
