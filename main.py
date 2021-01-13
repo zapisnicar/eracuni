@@ -8,7 +8,7 @@ Username i šifra su u config.yaml.
 Smesti PDF račun u pdf subfolder.
 Zapamti koji je poslednji skinuti račun, u data/storage.yaml
 Ako nema novog računa, završi program.
-Ako je došlo do promena u sajtu, ispiši problem na stdout i izađi sa statusnim kodom 1
+Ako je došlo do promena u sajtu, ispiši problem na stderr i izađi sa statusnim kodom 1
 """
 
 
@@ -60,7 +60,7 @@ def find_first_id(browser, target):
         element = browser.find_element_by_id(target)
         return element
     except NoSuchElementException:
-        print(f"Can't find id: {target}")
+        print(f"Can't find id: {target}", file=sys.stderr)
         browser.quit()
         sys.exit(1)
 
@@ -70,7 +70,7 @@ def find_first_css(browser, target):
         element = browser.find_element_by_css_selector(target)
         return element
     except NoSuchElementException:
-        print(f"Can't find CSS selector: {target}")
+        print(f"Can't find CSS selector: {target}", file=sys.stderr)
         browser.quit()
         sys.exit(1)
 
@@ -80,7 +80,7 @@ def find_all_css(browser, target):
         elements = browser.find_elements_by_css_selector(target)
         return elements
     except NoSuchElementException:
-        print(f"Can't find CSS selector: {target}")
+        print(f"Can't find CSS selector: {target}", file=sys.stderr)
         browser.quit()
         sys.exit(1)
 
@@ -104,7 +104,7 @@ def gecko_path():
         exe_path = r'bin/macos/geckodriver'
     else:
         # No idea
-        print(f"Unknown OS: {my_system}/{my_machine}")
+        print(f"Unknown OS: {my_system}/{my_machine}", file=sys.stderr)
         sys.exit(1)
 
     return exe_path
@@ -132,6 +132,7 @@ def start_browser(cfg):
 
 
 def move_and_rename_pdf(user):
+    # TODO use alias and YYYYMM for PDF file name
     for pdf_file in Path('data').glob('**/*.pdf'):
         new_path = 'pdf/' + user + '_' + pdf_file.stem + '.pdf'
         shutil.move(pdf_file, new_path)
@@ -154,7 +155,7 @@ if __name__ == '__main__':
         try:
             driver.get(config.url)
         except Exception as e:
-            print('Error loading page')
+            print('Error loading page', file=sys.stderr)
             driver.quit()
             sys.exit(1)
 
@@ -178,7 +179,7 @@ if __name__ == '__main__':
             last_invoice = invoices[1]
             period = find_first_css(last_invoice, 'td:nth-child(2)').text.strip()
         else:
-            print("Can't find table with invoices")
+            print("Can't find table with invoices", file=sys.stderr)
             driver.quit()
             sys.exit(1)
 
@@ -198,4 +199,5 @@ if __name__ == '__main__':
         # Logout
         logout_button = find_first_css(driver, 'a[title="Odjavljivanje sa sistema"]')
         logout_button.click()
+        # TODO don't quit browser ater every account, just at the end of the program
         driver.quit()
