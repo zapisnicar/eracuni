@@ -12,7 +12,7 @@
 
 - Zapamti koji je poslednji skinuti račun, u data/storage.yaml
 
-- Ako je došlo do greške u parsiranju web stranice, ispiši problem na stdout i izađi sa statusnim kodom 1.
+- Ako je došlo do greške u parsiranju web stranice, ispiši problem na stderr i izađi sa statusnim kodom 1.
 
 ### Instalacija:
 
