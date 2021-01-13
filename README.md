@@ -57,3 +57,7 @@ python main.py
 - Za MacOS, prouči rešenje problema notarizacije, nije testirano:
 
 https://firefox-source-docs.mozilla.org/testing/geckodriver/Notarization.html
+
+- U bin folderu se nalaze Firefox geckodriver programi za razne platforme, koji su preuzeti odavde:
+
+https://github.com/mozilla/geckodriver/releases
