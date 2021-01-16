@@ -80,28 +80,35 @@ class Config:
 
 class Storage:
     """
-    Read and write data/storage_{alias}.yaml files, every user_id have one
-    Remember what was the last saved PDF bill
+    Remember what was the last saved PDF bill, by period id string
+    Read and write data/storage_{alias}.yaml files, every user_id have separate one
     """
     def __init__(self, alias):
         """
-        Read data/storage_{alias}.yaml
-        If does not exist, last_period is "none"
+        Read last_period from data/storage_{alias}.yaml
+        If does not exist, las_period is "none"
+        Use period property as setter/getter
         """
-        self.file_path = f'data/storage_{alias}.yaml'
-        if os.path.isfile(self.file_path):
-            with open(self.file_path) as fin:
+        self.yaml_path = f'data/storage_{alias}.yaml'
+        if os.path.isfile(self.yaml_path):
+            with open(self.yaml_path) as fin:
                 my_storage = yaml.full_load(fin)
-            self.last_period = my_storage['last_period']
+            self.__period = my_storage['last_period'].strip()
         else:
-            self.last_period = 'none'
+            self.__period = 'none'
 
-    def write(self):
+    @property
+    def period(self):
+        return self.__period
+
+    @period.setter
+    def period(self, last_period):
         """
         Write data/storage_{alias}.yaml
         """
-        my_storage = {'last_period': self.last_period}
-        with open(self.file_path, 'w') as fout:
+        self.__period = last_period.strip()
+        my_storage = {'last_period': self.__period}
+        with open(self.yaml_path, 'w') as fout:
             yaml.dump(my_storage, fout)
 
 
@@ -213,7 +220,7 @@ def move_and_rename_pdf(alias):
         shutil.move(pdf_file, new_path)
 
 
-if __name__ == '__main__':
+def main():
     # Read configuration file
     config = Config()
 
@@ -257,17 +264,15 @@ if __name__ == '__main__':
             sys.exit(1)
 
         # Anything new?
-        last_period = storage.last_period.strip()
-        if period != last_period:
+        if period != storage.period:
             print(f'{account.alias} - {period}')
             # Save PDF with click on last cell in row 1
             save_button = find_first_css(invoices[1], 'td:last-child')
             save_button.click()
             # Move saved PDF file from data to pdf folder
             move_and_rename_pdf(account.alias)
-            # Save period as last_period in storage.yaml
-            storage.last_period = period
-            storage.write()
+            # Save period in storage.yaml
+            storage.period = period
 
         # Logout
         logout_button = find_first_css(driver, 'a[title="Odjavljivanje sa sistema"]')
@@ -275,3 +280,7 @@ if __name__ == '__main__':
 
     # Quit browser
     driver.quit()
+
+
+if __name__ == '__main__':
+    main()
