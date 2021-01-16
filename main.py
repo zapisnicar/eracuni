@@ -26,6 +26,8 @@ from selenium.common.exceptions import NoSuchElementException
 
 class Account:
     """
+    Helper class for Config
+
     Account:
         user_id: string
         password: string
@@ -39,7 +41,25 @@ class Account:
 
 class Config:
     """
-    Configuration, from config.yaml
+    Read configuration file, config.yaml:
+
+    Accounts:           Multiple accounts, list of Account objects
+      - user_id:        user id
+        password:       user password
+        alias:          alias, like home or garage
+      - user_id:        other id
+        password:       other password
+        alias:
+      - user_id:
+        password:
+        alias:
+    url:                Login page address
+    headless:           To start without GUI or not, True or False
+    user_agent:         Browser identifier string
+
+    Accounts with empty user_id are ignored
+    If alias is empty, user_id will be used as alias
+    There is no limit for how many accounts config file can have
     """
     def __init__(self):
         with open('config.yaml') as f:
@@ -60,10 +80,15 @@ class Config:
 
 class Storage:
     """
-    Storage
+    Read and write data/storage_{alias}.yaml files, every user_id have one
+    Remember what was the last saved PDF bill
     """
-    def __init__(self, user):
-        self.file_path = f'data/storage_{user}.yaml'
+    def __init__(self, alias):
+        """
+        Read data/storage_{alias}.yaml
+        If does not exist, last_period is "none"
+        """
+        self.file_path = f'data/storage_{alias}.yaml'
         if os.path.isfile(self.file_path):
             with open(self.file_path) as fin:
                 my_storage = yaml.full_load(fin)
@@ -72,12 +97,20 @@ class Storage:
             self.last_period = 'none'
 
     def write(self):
+        """
+        Write data/storage_{alias}.yaml
+        """
         my_storage = {'last_period': self.last_period}
         with open(self.file_path, 'w') as fout:
             yaml.dump(my_storage, fout)
 
 
 def find_first_id(browser, target):
+    """
+    Locate web element by id attribute
+    Return first one
+    Catch No Such Element Exception error, report problem to stderr and quit with exit code 1
+    """
     try:
         element = browser.find_element_by_id(target)
         return element
@@ -88,6 +121,11 @@ def find_first_id(browser, target):
 
 
 def find_first_css(browser, target):
+    """
+    Locate web element by css selector
+    Return first one
+    Catch No Such Element Exception error, report problem to stderr and quit with exit code 1
+    """
     try:
         element = browser.find_element_by_css_selector(target)
         return element
@@ -98,6 +136,11 @@ def find_first_css(browser, target):
 
 
 def find_all_css(browser, target):
+    """
+    Locate all web elements by css selector
+    Return list of elements
+    Catch No Such Element Exception error, report problem to stderr and quit with exit code 1
+    """
     try:
         elements = browser.find_elements_by_css_selector(target)
         return elements
@@ -108,6 +151,9 @@ def find_all_css(browser, target):
 
 
 def gecko_path():
+    """
+    Return path of geckodriver binary, OS dependent
+    """
     my_system = platform.system()
     my_machine = platform.machine()
     if my_system == 'Linux' and my_machine == 'x86_64':
@@ -133,6 +179,9 @@ def gecko_path():
 
 
 def start_browser(cfg):
+    """
+    Start browser with disabled "Save PDF" dialog
+    """
     my_options = Options()
     if cfg.headless:
         my_options.headless = True
@@ -153,17 +202,21 @@ def start_browser(cfg):
     return webdriver.Firefox(executable_path=gecko_path(), options=my_options, firefox_profile=my_profile)
 
 
-def move_and_rename_pdf(name):
-    # Use alias and YYYY-MM for PDF file name
+def move_and_rename_pdf(alias):
+    """
+    Rename saved PDF file as {alias}_{YYYY-MM}_{original name}.pdf
+    and move it to pdf subfolder
+    """
     today = date.today().strftime('%Y-%m')
     for pdf_file in Path('data').glob('**/*.pdf'):
-        new_path = f'pdf/{name}_{today}_{pdf_file.stem}.pdf'
+        new_path = f'pdf/{alias}_{today}_{pdf_file.stem}.pdf'
         shutil.move(pdf_file, new_path)
 
 
 if __name__ == '__main__':
-
+    # Read configuration file
     config = Config()
+
     # Start browser
     driver = start_browser(config)
 
@@ -187,9 +240,9 @@ if __name__ == '__main__':
         login_button = find_first_id(driver, 'cbPrihvati')
         login_button.click()
 
-        # Choose: Main page > Računi
-        choose_racuni = find_first_css(driver, 'a[title="Pregled računa"]')
-        choose_racuni.click()
+        # Choose Računi from menu
+        menu_racuni = find_first_css(driver, 'a[title="Pregled računa"]')
+        menu_racuni.click()
 
         # Invoices table
         invoices = find_all_css(driver, 'table.x2f tbody tr')
