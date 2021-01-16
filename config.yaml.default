@@ -1,11 +1,11 @@
 accounts:
-  - username: some_id
+  - user_id: some_id
     password: some_password
     alias: home
-  - username:
+  - user_id:
     password:
     alias:
-  - username:
+  - user_id:
     password:
     alias:
 url: http://portal.edb.rs/domportal_js/faces/common/Login.jspx
