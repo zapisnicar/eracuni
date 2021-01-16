@@ -24,6 +24,19 @@ from selenium.webdriver.firefox.options import Options
 from selenium.common.exceptions import NoSuchElementException
 
 
+class Account:
+    """
+    Account:
+        user_id: string
+        password: string
+        alias: string
+    """
+    def __init__(self, user_id, password, alias):
+        self.user_id = user_id
+        self.password = password
+        self.alias = alias
+
+
 class Config:
     """
     Configuration, from config.yaml
@@ -31,7 +44,15 @@ class Config:
     def __init__(self):
         with open('config.yaml') as f:
             cfg = yaml.full_load(f)
-        self.accounts = cfg['accounts']
+        self.accounts = []
+        for user in cfg['accounts']:
+            user_id = str(user['user_id']).strip()
+            password = str(user['password'])
+            alias = str(user['alias']).strip()
+            if alias == 'None':
+                alias = user_id
+            if user_id != 'None':
+                self.accounts.append(Account(user_id, password, alias))
         self.url = cfg['url']
         self.headless = cfg['headless']
         self.user_agent = cfg['user_agent']
@@ -133,8 +154,8 @@ def start_browser(cfg):
 
 
 def move_and_rename_pdf(name):
-    # Use alias and YYYYMM for PDF file name
-    today = date.today().strftime('%Y%m')
+    # Use alias and YYYY-MM for PDF file name
+    today = date.today().strftime('%Y-%m')
     for pdf_file in Path('data').glob('**/*.pdf'):
         new_path = f'pdf/{name}_{today}_{pdf_file.stem}.pdf'
         shutil.move(pdf_file, new_path)
@@ -147,15 +168,8 @@ if __name__ == '__main__':
     driver = start_browser(config)
 
     for account in config.accounts:
-        username = str(account['username'])
-        password = str(account['password'])
-        alias = str(account['alias'])
-        if username == 'None':
-            continue
-        if alias == 'None':
-            alias = username
 
-        storage = Storage(alias)
+        storage = Storage(account.alias)
 
         # Load page
         try:
@@ -167,9 +181,9 @@ if __name__ == '__main__':
 
         # Login
         login_name = find_first_id(driver, 'j_username')
-        login_name.send_keys(username)
+        login_name.send_keys(account.user_id)
         login_password = find_first_id(driver, 'j_password')
-        login_password.send_keys(password)
+        login_password.send_keys(account.password)
         login_button = find_first_id(driver, 'cbPrihvati')
         login_button.click()
 
@@ -192,12 +206,12 @@ if __name__ == '__main__':
         # Anything new?
         last_period = storage.last_period.strip()
         if period != last_period:
-            print(f'{alias} - {period}')
+            print(f'{account.alias} - {period}')
             # Save PDF with click on last cell in row 1
             save_button = find_first_css(invoices[1], 'td:last-child')
             save_button.click()
             # Move saved PDF file from data to pdf folder
-            move_and_rename_pdf(alias)
+            move_and_rename_pdf(account.alias)
             # Save period as last_period in storage.yaml
             storage.last_period = period
             storage.write()
