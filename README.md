@@ -27,7 +27,7 @@ sudo apt install firefox-esr
 - Preuzmi program sa ove stranice kao zip arhivu i otpakuj je u željeni folder. Ili koristi git:
 
 ```
-git clone git@github.com:zapisnicar/epsracun.git
+git clone https://github.com/zapisnicar/epsracun.git
 ```
 
 - Instaliraj neophodne module:
