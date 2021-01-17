@@ -58,6 +58,6 @@ python main.py
 
 https://firefox-source-docs.mozilla.org/testing/geckodriver/Notarization.html
 
-- U bin folderu se nalaze Firefox geckodriver programi za razne platforme, koji su preuzeti odavde:
+- U bin folderu se nalaze Firefox geckodriver programi za razne platforme, koji su preuzeti sa:
 
 https://github.com/mozilla/geckodriver/releases
