@@ -82,12 +82,12 @@ class Storage:
     """
     Remember what was the last saved PDF bill, by period id string
     Read and write data/storage_{alias}.yaml files, every user_id have separate one
+    Use period property as setter/getter
     """
     def __init__(self, alias):
         """
         Read last_period from data/storage_{alias}.yaml
         If does not exist, las_period is "none"
-        Use period property as setter/getter
         """
         self.yaml_path = f'data/storage_{alias}.yaml'
         if os.path.isfile(self.yaml_path):
