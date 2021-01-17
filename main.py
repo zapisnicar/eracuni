@@ -43,7 +43,7 @@ class Config:
     """
     Read configuration file, config.yaml:
 
-    Accounts:           Multiple accounts, list of Account objects
+    Accounts:           List of accounts
       - user_id:        user id
         password:       user password
         alias:          alias, like home or garage
@@ -87,7 +87,7 @@ class Storage:
     def __init__(self, alias):
         """
         Read last_period from data/storage_{alias}.yaml
-        If does not exist, las_period is "none"
+        If file does not exist, last_period is "none"
         """
         self.yaml_path = f'data/storage_{alias}.yaml'
         if os.path.isfile(self.yaml_path):
@@ -188,6 +188,7 @@ def gecko_path():
 def start_browser(cfg):
     """
     Start browser with disabled "Save PDF" dialog
+    Download files to data folder
     """
     my_options = Options()
     if cfg.headless:
@@ -251,7 +252,7 @@ def main():
         menu_racuni = find_first_css(driver, 'a[title="Pregled računa"]')
         menu_racuni.click()
 
-        # Invoices table
+        # Find Invoices table
         invoices = find_all_css(driver, 'table.x2f tbody tr')
         # Skip first row [0] as header
         # Last period is in second cell of second row [1]
