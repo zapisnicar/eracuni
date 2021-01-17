@@ -1,2 +1,2 @@
 init:
-	pip install -r dependancies.txt
+	pip install -r dependencies.txt

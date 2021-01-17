@@ -33,9 +33,9 @@ git clone https://github.com/zapisnicar/epsracun.git
 - Instaliraj neophodne module:
 
 ```
-pip3 install -r dependancies.txt
+pip3 install -r dependencies.txt
     ili
-pip install -r dependancies.txt
+pip install -r dependencies.txt
 ```
 
 - Preimenuj config.yaml.DEFAULT u config.yaml
