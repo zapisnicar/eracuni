@@ -1,10 +1,11 @@
-# EPS račun - Electric bill scraper (Serbian)
+# eRačuni - Utility bills scraper (Serbian)
 
-- Samo za distributivno područje Beograd
+- EPS (samo za fizička lica i distributivno područje Beograd)
+- InfoStan
 
 ### Namena:
 
-- Pronađi poslednji račun za struju (za fizička lica) sa http://portal.edb.rs
+- Pronađi poslednje račune sa http://portal.edb.rs i https://esanduce.rs
 
 - Ako nema novog računa, završi program.
   
@@ -27,7 +28,7 @@ sudo apt install firefox-esr
 - Preuzmi program sa ove stranice kao zip arhivu i otpakuj je u željeni folder. Ili koristi git:
 
 ```
-git clone https://github.com/zapisnicar/epsracun.git
+git clone https://github.com/zapisnicar/eracuni
 ```
 
 - Instaliraj neophodne module:
