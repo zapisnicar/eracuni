@@ -68,9 +68,9 @@ class Config:
         for user in cfg['EDB_Accounts']:
             user_id = str(user['user_id']).strip()
             password = str(user['password'])
-            alias = str(user['alias']).strip()
-            if alias == 'None':
-                alias = user_id
+            alias = 'edb_' + str(user['alias']).strip()
+            if alias == 'edb_None':
+                alias = 'edb_' + user_id
             if user_id != 'None':
                 self.edb_accounts.append(Account(user_id, password, alias))
 
@@ -78,9 +78,9 @@ class Config:
         for user in cfg['InfoStan_Accounts']:
             user_id = str(user['username']).strip()
             password = str(user['password'])
-            alias = str(user['alias']).strip()
-            if alias == 'None':
-                alias = user_id
+            alias = 'infostan_' + str(user['alias']).strip()
+            if alias == 'infostan_None':
+                alias = 'infostan_' + user_id
             if user_id != 'None':
                 self.infostan_accounts.append(Account(user_id, password, alias))
 
@@ -102,7 +102,8 @@ class Storage:
         Read last_period from data/storage_{alias}.yaml
         If file does not exist, last_period is "none"
         """
-        self.yaml_path = f'data/storage_{alias}.yaml'
+        self.alias = alias
+        self.yaml_path = f'data/storage_{self.alias}.yaml'
         if os.path.isfile(self.yaml_path):
             with open(self.yaml_path) as fin:
                 my_storage = yaml.full_load(fin)
@@ -123,6 +124,16 @@ class Storage:
         my_storage = {'last_period': self.__period}
         with open(self.yaml_path, 'w') as fout:
             yaml.dump(my_storage, fout)
+
+    def move_pdf(self):
+        """
+        Rename saved PDF file as {alias}_{YYYY-MM}_{original name}.pdf
+        and move it to pdf subfolder
+        """
+        today = date.today().strftime('%Y-%m')
+        for pdf_file in Path('data').glob('**/*.pdf'):
+            new_path = f'pdf/{self.alias}_{today}_{pdf_file.stem}.pdf'
+            shutil.move(pdf_file, new_path)
 
 
 def gecko_path():
@@ -151,14 +162,3 @@ def gecko_path():
         sys.exit(1)
 
     return exe_path
-
-
-def move_and_rename_pdf(alias):
-    """
-    Rename saved PDF file as {alias}_{YYYY-MM}_{original name}.pdf
-    and move it to pdf subfolder
-    """
-    today = date.today().strftime('%Y-%m')
-    for pdf_file in Path('data').glob('**/*.pdf'):
-        new_path = f'pdf/{alias}_{today}_{pdf_file.stem}.pdf'
-        shutil.move(pdf_file, new_path)

@@ -1,2 +1,2 @@
-from . import browser, data
-__all__ = [browser, data]
+from . import browser, data, edb, infostan
+__all__ = [browser, data, edb, infostan]

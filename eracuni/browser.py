@@ -10,6 +10,31 @@ from selenium.webdriver.firefox.options import Options
 from selenium.common.exceptions import NoSuchElementException
 
 
+def run_firefox(config):
+    """
+    Start browser with disabled "Save PDF" dialog
+    Download files to data folder
+    """
+    my_options = Options()
+    if config.headless:
+        my_options.headless = True
+        my_options.add_argument('--window-size=1920,1200')
+    my_profile = webdriver.FirefoxProfile()
+    my_profile.set_preference('general.useragent.override', config.user_agent)
+    my_profile.set_preference('browser.download.folderList', 2)
+    my_profile.set_preference('browser.download.manager.showWhenStarting', False)
+    my_profile.set_preference('browser.download.manager.useWindow', False)
+    my_profile.set_preference('pdfjs.disabled', True)
+    my_profile.set_preference('browser.download.dir',
+                              os.path.join(os.getcwd(), 'data'))
+    my_profile.set_preference('browser.helperApps.neverAsk.openFile',
+                              'application/octet-stream, application/pdf, application/x-www-form-urlencoded')
+    my_profile.set_preference('browser.helperApps.neverAsk.saveToDisk',
+                              'application/octet-stream, application/pdf, application/x-www-form-urlencoded')
+
+    return webdriver.Firefox(executable_path=config.gecko_path, options=my_options, firefox_profile=my_profile)
+
+
 def find_first_id(browser, target):
     """
     Locate web element by id attribute
@@ -53,28 +78,3 @@ def find_all_css(browser, target):
         print(f"Can't find CSS selector: {target}", file=sys.stderr)
         browser.quit()
         sys.exit(1)
-
-
-def start(cfg):
-    """
-    Start browser with disabled "Save PDF" dialog
-    Download files to data folder
-    """
-    my_options = Options()
-    if cfg.headless:
-        my_options.headless = True
-        my_options.add_argument('--window-size=1920,1200')
-    my_profile = webdriver.FirefoxProfile()
-    my_profile.set_preference('general.useragent.override', cfg.user_agent)
-    my_profile.set_preference('browser.download.folderList', 2)
-    my_profile.set_preference('browser.download.manager.showWhenStarting', False)
-    my_profile.set_preference('browser.download.manager.useWindow', False)
-    my_profile.set_preference('pdfjs.disabled', True)
-    my_profile.set_preference('browser.download.dir',
-                              os.path.join(os.getcwd(), 'data'))
-    my_profile.set_preference('browser.helperApps.neverAsk.openFile',
-                              'application/octet-stream, application/pdf, application/x-www-form-urlencoded')
-    my_profile.set_preference('browser.helperApps.neverAsk.saveToDisk',
-                              'application/octet-stream, application/pdf, application/x-www-form-urlencoded')
-
-    return webdriver.Firefox(executable_path=cfg.gecko_path, options=my_options, firefox_profile=my_profile)
