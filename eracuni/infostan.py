@@ -41,3 +41,4 @@ class Infostan:
             time.sleep(2)
             x = find_first_css(self.driver, 'div.row-item')
             print(x)
+            # TODO finish rest of the module

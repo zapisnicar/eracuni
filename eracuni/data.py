@@ -1,5 +1,5 @@
 """
-Data module, for configuration, storage and file manipulation
+Data module for configuration, storage and file manipulation
 """
 
 

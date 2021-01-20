@@ -5,7 +5,11 @@
 
 ### Namena:
 
-- Pronađi poslednje račune sa http://portal.edb.rs i https://esanduce.rs
+- Pronađi poslednje račune sa:
+  
+    http://portal.edb.rs
+
+    https://esanduce.rs
 
 - Ako nema novog računa, završi program.
   
