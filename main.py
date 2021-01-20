@@ -29,12 +29,10 @@ def main():
     driver = run_firefox(config)
 
     # Check EDB
-    # edb = Edb(driver, config)
-    # edb.search()
+    Edb(driver, config)
 
     # Check InfoStan
-    infostan = Infostan(driver, config)
-    infostan.search()
+    Infostan(driver, config)
 
     # Quit browser
     driver.quit()
