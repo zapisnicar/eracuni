@@ -16,7 +16,7 @@ Ako je došlo do greške u parsiranju web stranice, ispiši problem na stderr i 
 
 
 from eracuni.data import Config
-from eracuni.browser import run_firefox
+from eracuni.browser import firefox
 from eracuni.edb import Edb
 from eracuni.infostan import Infostan
 
@@ -26,16 +26,16 @@ def main():
     config = Config()
 
     # Start browser
-    driver = run_firefox(config)
+    browser = firefox(config)
 
     # Check EDB
-    Edb(driver, config)
+    Edb(browser, config)
 
     # Check InfoStan
-    Infostan(driver, config)
+    Infostan(browser, config)
 
     # Quit browser
-    driver.quit()
+    browser.quit()
 
 
 if __name__ == '__main__':

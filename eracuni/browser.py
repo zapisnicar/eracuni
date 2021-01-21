@@ -10,7 +10,7 @@ from selenium.webdriver.firefox.options import Options
 from selenium.common.exceptions import NoSuchElementException
 
 
-def run_firefox(config):
+def firefox(config):
     """
     Start browser with disabled "Save PDF" dialog
     Download files to data folder
