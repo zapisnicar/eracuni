@@ -67,22 +67,22 @@ class Config:
         self.edb_accounts = []
         for user in cfg['EDB_Accounts']:
             user_id = str(user['user_id']).strip()
-            password = str(user['password'])
-            alias = 'edb_' + str(user['alias']).strip()
-            if alias == 'edb_None':
-                alias = 'edb_' + user_id
             if user_id != 'None':
-                self.edb_accounts.append(Account(user_id, password, alias))
+                password = str(user['password'])
+                alias = str(user['alias']).strip()
+                if alias == 'None':
+                    alias = user_id
+                self.edb_accounts.append(Account(user_id, password, f'edb_{alias}'))
 
         self.infostan_accounts = []
         for user in cfg['InfoStan_Accounts']:
             user_id = str(user['username']).strip()
-            password = str(user['password'])
-            alias = 'infostan_' + str(user['alias']).strip()
-            if alias == 'infostan_None':
-                alias = 'infostan_' + user_id
             if user_id != 'None':
-                self.infostan_accounts.append(Account(user_id, password, alias))
+                password = str(user['password'])
+                alias = str(user['alias']).strip()
+                if alias == 'None':
+                    alias = user_id
+                self.infostan_accounts.append(Account(user_id, password, f'infostan_{alias}'))
 
         self.edb_url = cfg['EDB_address']
         self.infostan_url = cfg['InfoStan_address']
