@@ -28,10 +28,10 @@ def main():
     # Start browser
     browser = firefox(config)
 
-    # Check EDB
+    # Check EDB bills
     Edb(browser, config)
 
-    # Check InfoStan
+    # Check InfoStan bills
     Infostan(browser, config)
 
     # Quit browser
