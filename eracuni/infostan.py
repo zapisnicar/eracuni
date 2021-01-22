@@ -39,6 +39,16 @@ class Infostan:
             icon_infostan.click()
 
             time.sleep(2)
-            x = find_first_css(self.driver, 'div.row-item')
-            print(x)
-            # TODO finish rest of the module
+            rows = find_all_css(self.driver, 'div.row-item')
+            for row in rows:
+                # print(row)
+                row.click()
+                time.sleep(3)
+                last_row = find_first_css(self.driver, 'div.row-item')
+                last_period_cell = find_first_css(last_row, '.rowItemName > a')
+                print(last_period_cell.get_attribute('text'))
+                time.sleep(3)
+                last_row.click()
+                break
+            time.sleep(10)
+            # TODO Pregled računa button click

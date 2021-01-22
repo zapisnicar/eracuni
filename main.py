@@ -29,7 +29,7 @@ def main():
     browser = firefox(config)
 
     # Check EDB bills
-    Edb(browser, config)
+    # Edb(browser, config)
 
     # Check InfoStan bills
     Infostan(browser, config)
