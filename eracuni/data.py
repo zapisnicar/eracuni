@@ -88,6 +88,7 @@ class Config:
         self.infostan_url = cfg['InfoStan_address']
         self.headless = cfg['headless']
         self.user_agent = cfg['user_agent']
+        self.timeout = cfg['timeout']
         self.gecko_path = gecko_path()
 
 
