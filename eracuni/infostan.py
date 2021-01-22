@@ -34,21 +34,28 @@ class Infostan:
             login_button.click()
 
             # Choose Infostan
-            time.sleep(2)
             icon_infostan = find_first_id(self.driver, '1_ЈКП Инфостан Технологије')
             icon_infostan.click()
 
-            time.sleep(2)
+            # Find all locations
             rows = find_all_css(self.driver, 'div.row-item')
             for row in rows:
-                # print(row)
+                # Choose location
                 row.click()
-                time.sleep(3)
+                # Find top row, with last bill
                 last_row = find_first_css(self.driver, 'div.row-item')
                 last_period_cell = find_first_css(last_row, '.rowItemName > a')
                 print(last_period_cell.get_attribute('text'))
-                time.sleep(3)
+                # Click on top row, for side menu
                 last_row.click()
+                # Find "Pregled računa" button
+                pregled_racuna_button = find_first_id(driver, 'step5')
+                pregled_racuna_button.click()
+                # Find Download icon
+                # TODO wait until PDF is loaded and then click on Download button
+                time.sleep(8)
+                save_button = find_first_id(driver, 'download')
+                save_button.click()
                 break
             time.sleep(10)
-            # TODO Pregled računa button click
+
