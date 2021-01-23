@@ -6,6 +6,9 @@ InfoStan
 import sys
 from eracuni.data import Storage
 from eracuni.browser import find_first_id, find_first_css, find_all_css
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions
 import time
 
 
@@ -38,9 +41,11 @@ class Infostan:
             icon_infostan.click()
 
             # Find all locations
-            rows = find_all_css(self.driver, 'div.row-item')
-            for row in rows:
+            number_of_locations = len(find_all_css(self.driver, 'div.row-item'))
+            for i in range(1, number_of_locations + 1):
                 # Choose location
+                row = find_first_css(self.driver,
+                                     f'.container-page > div:nth-child(4) > div:nth-child({i}) > div:nth-child(1)')
                 row.click()
                 # Find top row, with last bill
                 last_row = find_first_css(self.driver, 'div.row-item')
@@ -51,11 +56,22 @@ class Infostan:
                 # Find "Pregled računa" button
                 pregled_racuna_button = find_first_id(driver, 'step5')
                 pregled_racuna_button.click()
+                # Wait until page load
+                WebDriverWait(driver, self.config.timeout).until(
+                    expected_conditions.presence_of_element_located((By.CSS_SELECTOR, 'div.page[data-loaded="true"')))
                 # Find Download icon
-                # TODO wait until PDF is loaded and then click on Download button
-                time.sleep(8)
                 save_button = find_first_id(driver, 'download')
                 save_button.click()
-                break
+                # Wait 1 sec
+                time.sleep(1)
+                # Find (X) - Close button
+                close_button = find_first_css(driver, 'div.pdfCloseBtn>span.close-btn')
+                close_button.click()
+                # Find back button
+                back_button = find_first_css(driver, 'div.icon-back')
+                back_button.click()
+
+            print('End of program')
             time.sleep(10)
+
 
