@@ -10,6 +10,7 @@ import platform
 import shutil
 from datetime import date
 from pathlib import Path
+import codecs
 
 
 class Account:
@@ -99,7 +100,7 @@ class Storage:
     Use last_saved property as setter/getter
     """
     def __init__(self, file_name_infix):
-        f"""
+        """
         Read last_saved from data/storage_{file_name_infix}.yaml
         If file does not exist, last_saved is "none"
         """
@@ -121,9 +122,10 @@ class Storage:
         """
         Write data/{file_name_infix}.yaml
         """
+        # TODO fix utf-8 encoding
         self.__last_saved = period.strip()
         my_storage = {'last_saved': self.__last_saved}
-        with open(self.yaml_path, 'w') as fout:
+        with codecs.open(self.yaml_path, 'w', "utf-8") as fout:
             yaml.dump(my_storage, fout)
 
     def move_pdf(self):

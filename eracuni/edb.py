@@ -50,7 +50,7 @@ class Edb:
 
             # Anything new?
             if period != storage.last_saved:
-                print(f'storage_edb_{account.alias} - {period}')
+                print(f'EDB {account.alias} - {period}')
                 # Save PDF with click on last cell in row 1
                 save_button = find_first_css(invoices[1], 'td:last-child')
                 save_button.click()

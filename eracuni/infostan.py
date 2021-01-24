@@ -52,31 +52,37 @@ class Infostan:
                 # Find top row, with last bill
                 last_row = find_first_css(self.driver, 'div.row-item')
                 last_bill_date = find_first_css(last_row, '.rowItemName > a').get_attribute('text')
-                print(last_bill_date)
 
-                # Click on top row, for right side menu
-                last_row.click()
-                # Find "Pregled računa" button
-                pregled_racuna_button = find_first_id(driver, 'step5')
-                pregled_racuna_button.click()
+                # Anything new?
+                if last_bill_date != storage.last_saved:
+                    print(f'InfoStan {account.alias} {i} - {last_bill_date}')
+                    # Click on top row, for right side menu
+                    last_row.click()
+                    # Find "Pregled računa" button
+                    pregled_racuna_button = find_first_id(driver, 'step5')
+                    pregled_racuna_button.click()
 
-                # Wait until page load
-                WebDriverWait(driver, self.config.timeout).until(
-                    expected_conditions.presence_of_element_located((By.CSS_SELECTOR, 'div.page[data-loaded="true"')))
-                # Find Download icon
-                save_button = find_first_id(driver, 'download')
-                save_button.click()
+                    # Wait until page load
+                    WebDriverWait(driver, self.config.timeout).until(
+                        expected_conditions.presence_of_element_located((By.CSS_SELECTOR, 'div.page[data-loaded="true"')))
+                    # Find Download icon
+                    save_button = find_first_id(driver, 'download')
+                    save_button.click()
 
-                time.sleep(1)
+                    time.sleep(1)
 
-                # Find (X) - Close button
-                close_button = find_first_css(driver, 'div.pdfCloseBtn>span.close-btn')
-                close_button.click()
-                # Find back button
-                back_button = find_first_css(driver, 'div.icon-back')
-                back_button.click()
-                # Wait 1 sec
-                time.sleep(1)
+                    # Find (X) - Close button
+                    close_button = find_first_css(driver, 'div.pdfCloseBtn>span.close-btn')
+                    close_button.click()
+                    # Find back button
+                    back_button = find_first_css(driver, 'div.icon-back')
+                    back_button.click()
+                    # Move saved PDF file from data to pdf folder
+                    storage.move_pdf()
+                    # Remember new last_saved in data/storage.yaml
+                    storage.last_saved = last_bill_date
+
+                    time.sleep(1)
 
             # Logout and confirm
             logout_button = find_first_css(driver, 'div.mainBtnsHolder>div:nth-child(7)')
