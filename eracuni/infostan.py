@@ -18,7 +18,7 @@ class Infostan:
         self.config = config
 
         for account in self.config.infostan_accounts:
-            # Load page
+            # Load main page
             try:
                 self.driver.get(self.config.infostan_url)
             except Exception:
@@ -34,7 +34,7 @@ class Infostan:
             login_button = find_first_css(self.driver, '.btn-blue')
             login_button.click()
 
-            # Choose Infostan
+            # Choose Infostan icon
             icon_infostan = find_first_id(self.driver, '1_ЈКП Инфостан Технологије')
             icon_infostan.click()
 
@@ -61,32 +61,35 @@ class Infostan:
                 else:
                     # New bill!
                     print(f'InfoStan {account.alias} {i} - {last_bill_date}')
+
                     # Click on top row, for right side menu
                     last_row.click()
-                    # Find "Pregled računa" button
+                    # Click on "Pregled računa" button
                     pregled_racuna_button = find_first_id(driver, 'step5')
                     pregled_racuna_button.click()
 
                     # Wait until page load
                     WebDriverWait(driver, self.config.timeout).until(
                         expected_conditions.presence_of_element_located((By.CSS_SELECTOR, 'div.page[data-loaded="true"')))
-                    # Find Download icon
+
+                    # Click Download icon
                     save_button = find_first_id(driver, 'download')
                     save_button.click()
-
                     time.sleep(1)
 
-                    # Find (X) - Close button
+                    # Click (X) - Close button
                     close_button = find_first_css(driver, 'div.pdfCloseBtn>span.close-btn')
                     close_button.click()
-                    # Find back button
+
+                    # Click Back button
                     back_button = find_first_css(driver, 'div.icon-back')
                     back_button.click()
+
                     # Move saved PDF file from data to pdf folder
                     storage.move_pdf()
+
                     # Remember new last_saved in data/storage.yaml
                     storage.last_saved = last_bill_date
-
                     time.sleep(1)
 
             # Logout and confirm

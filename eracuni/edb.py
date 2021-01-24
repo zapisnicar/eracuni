@@ -16,7 +16,7 @@ class Edb:
         for account in self.config.edb_accounts:
             storage = Storage(f'edb_{account.alias}')
 
-            # Load page
+            # Load main page
             try:
                 self.driver.get(self.config.edb_url)
             except Exception as e:
