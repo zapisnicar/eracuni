@@ -54,9 +54,12 @@ class Infostan:
                 last_bill_date = find_first_css(last_row, '.rowItemName > a').get_attribute('text').strip()
 
                 # Anything new?
-                print(f'Last bill /{last_bill_date}')
-                print(f'Saved per /{storage.last_saved}')
-                if last_bill_date != storage.last_saved:
+                if last_bill_date == storage.last_saved:
+                    # Nothing new, click on Back button
+                    back_button = find_first_css(driver, 'div.icon-back')
+                    back_button.click()
+                else:
+                    # New bill!
                     print(f'InfoStan {account.alias} {i} - {last_bill_date}')
                     # Click on top row, for right side menu
                     last_row.click()
@@ -91,6 +94,3 @@ class Infostan:
             logout_button.click()
             confirm_button = find_first_css(driver, 'div.modal-delete-action > button:nth-child(1)')
             confirm_button.click()
-
-            print('End of program')
-            time.sleep(3)
