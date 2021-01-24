@@ -42,7 +42,7 @@ class Infostan:
             number_of_locations = len(find_all_css(self.driver, 'div.row-item'))
             for i in range(1, number_of_locations + 1):
                 # Every location will have unique filename for storage
-                storage = Storage(f'storage_infostan_{account.alias}_{i}')
+                storage = Storage(f'infostan_{account.alias}_{i}')
 
                 # Choose location, i-th row in location table
                 row_i = find_first_css(

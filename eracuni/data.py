@@ -104,7 +104,7 @@ class Storage:
         If file does not exist, last_period is "none"
         """
         self.file_name_infix = file_name_infix
-        self.yaml_path = f'data/{self.file_name_infix}.yaml'
+        self.yaml_path = f'data/storage_{self.file_name_infix}.yaml'
         if os.path.isfile(self.yaml_path):
             with open(self.yaml_path) as fin:
                 my_storage = yaml.full_load(fin)

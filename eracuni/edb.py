@@ -14,7 +14,7 @@ class Edb:
         self.config = config
 
         for account in self.config.edb_accounts:
-            storage = Storage(f'storage_edb_{account.alias}')
+            storage = Storage(f'edb_{account.alias}')
 
             # Load page
             try:
