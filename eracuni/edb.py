@@ -49,7 +49,7 @@ class Edb:
                 sys.exit(1)
 
             # Anything new?
-            if period != storage.period:
+            if period != storage.last_saved:
                 print(f'storage_edb_{account.alias} - {period}')
                 # Save PDF with click on last cell in row 1
                 save_button = find_first_css(invoices[1], 'td:last-child')
@@ -57,7 +57,7 @@ class Edb:
                 # Move saved PDF file from data to pdf folder
                 storage.move_pdf()
                 # Save period in self.storage.yaml
-                storage.period = period
+                storage.last_saved = period
 
             # Logout
             logout_button = find_first_css(self.driver, 'a[title="Odjavljivanje sa sistema"]')

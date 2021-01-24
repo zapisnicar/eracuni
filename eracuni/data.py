@@ -94,35 +94,35 @@ class Config:
 
 class Storage:
     """
-    Remember what was the last saved PDF bill, by period id string
-    Read and write data/{file_name_infix}.yaml files, every user_id have separate one
-    Use period property as setter/getter
+    Remember what was the last saved PDF bill, by last_saved id string
+    Read and write data/storage_{file_name_infix}.yaml files, every user_id have separate one
+    Use last_saved property as setter/getter
     """
     def __init__(self, file_name_infix):
         f"""
-        Read last_period from data/{file_name_infix}.yaml
-        If file does not exist, last_period is "none"
+        Read last_saved from data/storage_{file_name_infix}.yaml
+        If file does not exist, last_saved is "none"
         """
         self.file_name_infix = file_name_infix
         self.yaml_path = f'data/storage_{self.file_name_infix}.yaml'
         if os.path.isfile(self.yaml_path):
             with open(self.yaml_path) as fin:
                 my_storage = yaml.full_load(fin)
-            self.__period = my_storage['last_period'].strip()
+            self.__last_saved = my_storage['last_saved'].strip()
         else:
-            self.__period = 'none'
+            self.__last_saved = 'none'
 
     @property
-    def period(self):
-        return self.__period
+    def last_saved(self):
+        return self.__last_saved
 
-    @period.setter
-    def period(self, last_period):
+    @last_saved.setter
+    def last_saved(self, period):
         """
         Write data/{file_name_infix}.yaml
         """
-        self.__period = last_period.strip()
-        my_storage = {'last_period': self.__period}
+        self.__last_saved = period.strip()
+        my_storage = {'last_saved': self.__last_saved}
         with open(self.yaml_path, 'w') as fout:
             yaml.dump(my_storage, fout)
 
