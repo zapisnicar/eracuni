@@ -56,7 +56,7 @@ class Edb:
                 save_button.click()
                 # Move saved PDF file from data to pdf folder
                 storage.move_pdf()
-                # Save period in self.storage.yaml
+                # Remember new last_saved in data/storage.yaml
                 storage.last_saved = period
 
             # Logout
