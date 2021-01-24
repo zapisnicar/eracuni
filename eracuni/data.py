@@ -72,7 +72,7 @@ class Config:
                 alias = str(user['alias']).strip()
                 if alias == 'None':
                     alias = user_id
-                self.edb_accounts.append(Account(user_id, password, f'edb_{alias}'))
+                self.edb_accounts.append(Account(user_id, password, alias))
 
         self.infostan_accounts = []
         for user in cfg['InfoStan_Accounts']:
@@ -82,7 +82,7 @@ class Config:
                 alias = str(user['alias']).strip()
                 if alias == 'None':
                     alias = user_id
-                self.infostan_accounts.append(Account(user_id, password, f'infostan_{alias}'))
+                self.infostan_accounts.append(Account(user_id, password, alias))
 
         self.edb_url = cfg['EDB_address']
         self.infostan_url = cfg['InfoStan_address']
@@ -95,16 +95,16 @@ class Config:
 class Storage:
     """
     Remember what was the last saved PDF bill, by period id string
-    Read and write data/storage_{alias}.yaml files, every user_id have separate one
+    Read and write data/{data_file_stem}.yaml files, every user_id have separate one
     Use period property as setter/getter
     """
-    def __init__(self, alias):
-        """
-        Read last_period from data/storage_{alias}.yaml
+    def __init__(self, data_file_stem):
+        f"""
+        Read last_period from data/{data_file_stem}.yaml
         If file does not exist, last_period is "none"
         """
-        self.alias = alias
-        self.yaml_path = f'data/storage_{self.alias}.yaml'
+        self.data_file_stem = data_file_stem
+        self.yaml_path = f'data/{self.data_file_stem}.yaml'
         if os.path.isfile(self.yaml_path):
             with open(self.yaml_path) as fin:
                 my_storage = yaml.full_load(fin)
@@ -119,7 +119,7 @@ class Storage:
     @period.setter
     def period(self, last_period):
         """
-        Write data/storage_{alias}.yaml
+        Write data/{data_file_stem}.yaml
         """
         self.__period = last_period.strip()
         my_storage = {'last_period': self.__period}
@@ -128,12 +128,12 @@ class Storage:
 
     def move_pdf(self):
         """
-        Rename saved PDF file as {alias}_{YYYY-MM}_{original name}.pdf
+        Rename saved PDF file as {data_file_stem}_{YYYY-MM}_{original name}.pdf
         and move it to pdf subfolder
         """
         today = date.today().strftime('%Y-%m')
         for pdf_file in Path('data').glob('**/*.pdf'):
-            new_path = f'pdf/{self.alias}_{today}_{pdf_file.stem}.pdf'
+            new_path = f'pdf/{self.data_file_stem}_{today}_{pdf_file.stem}.pdf'
             shutil.move(pdf_file, new_path)
 
 
