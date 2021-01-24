@@ -10,7 +10,6 @@ import platform
 import shutil
 from datetime import date
 from pathlib import Path
-import codecs
 
 
 class Account:
@@ -125,8 +124,9 @@ class Storage:
         # TODO fix utf-8 encoding
         self.__last_saved = period.strip()
         my_storage = {'last_saved': self.__last_saved}
-        with codecs.open(self.yaml_path, 'w', "utf-8") as fout:
-            yaml.dump(my_storage, fout)
+        with open(self.yaml_path, 'w') as fout:
+            # Dump data with unicode characters to
+            yaml.dump(my_storage, fout, allow_unicode=True)
 
     def move_pdf(self):
         """
