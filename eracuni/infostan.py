@@ -51,9 +51,11 @@ class Infostan:
 
                 # Find top row, with last bill
                 last_row = find_first_css(self.driver, 'div.row-item')
-                last_bill_date = find_first_css(last_row, '.rowItemName > a').get_attribute('text')
+                last_bill_date = find_first_css(last_row, '.rowItemName > a').get_attribute('text').strip()
 
                 # Anything new?
+                print(f'Last bill /{last_bill_date}')
+                print(f'Saved per /{storage.last_saved}')
                 if last_bill_date != storage.last_saved:
                     print(f'InfoStan {account.alias} {i} - {last_bill_date}')
                     # Click on top row, for right side menu
