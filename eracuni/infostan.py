@@ -70,7 +70,8 @@ class Infostan:
 
                     # Wait until page load
                     WebDriverWait(driver, self.config.timeout).until(
-                        expected_conditions.presence_of_element_located((By.CSS_SELECTOR, 'div.page[data-loaded="true"')))
+                        expected_conditions.presence_of_element_located(
+                            (By.CSS_SELECTOR, 'div.page[data-loaded="true"')))
 
                     # Click Download icon
                     save_button = find_first_id(driver, 'download')
@@ -85,10 +86,10 @@ class Infostan:
                     back_button = find_first_css(driver, 'div.icon-back')
                     back_button.click()
 
-                    # Move saved PDF file from data to pdf folder
+                    # Move saved PDF file from var to pdf folder
                     storage.move_pdf()
 
-                    # Remember new last_saved in data/storage.yaml
+                    # Remember new last_saved in var/storage.yaml
                     storage.last_saved = last_bill_date
                     time.sleep(1)
 

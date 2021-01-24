@@ -95,16 +95,16 @@ class Config:
 class Storage:
     """
     Remember what was the last saved PDF bill, by last_saved id string
-    Read and write data/storage_{file_name_infix}.yaml files, every user_id have separate one
+    Read and write var/storage_{file_name_infix}.yaml files, every user_id have separate one
     Use last_saved property as setter/getter
     """
     def __init__(self, file_name_infix):
         """
-        Read last_saved from data/storage_{file_name_infix}.yaml
+        Read last_saved from var/storage_{file_name_infix}.yaml
         If file does not exist, last_saved is "none"
         """
         self.file_name_infix = file_name_infix
-        self.yaml_path = f'data/storage_{self.file_name_infix}.yaml'
+        self.yaml_path = f'var/storage_{self.file_name_infix}.yaml'
         if os.path.isfile(self.yaml_path):
             with open(self.yaml_path) as fin:
                 my_storage = yaml.full_load(fin)
@@ -119,13 +119,13 @@ class Storage:
     @last_saved.setter
     def last_saved(self, period):
         """
-        Write data/{file_name_infix}.yaml
+        Write var/{file_name_infix}.yaml
         """
         # TODO fix utf-8 encoding
         self.__last_saved = period.strip()
         my_storage = {'last_saved': self.__last_saved}
         with open(self.yaml_path, 'w') as fout:
-            # Dump data with unicode characters to
+            # Dump my_storage with unicode characters to
             yaml.dump(my_storage, fout, allow_unicode=True)
 
     def move_pdf(self):
@@ -134,7 +134,7 @@ class Storage:
         and move it to pdf subfolder
         """
         today = date.today().strftime('%Y-%m')
-        for pdf_file in Path('data').glob('**/*.pdf'):
+        for pdf_file in Path('var').glob('**/*.pdf'):
             new_path = f'pdf/{self.file_name_infix}_{today}_{pdf_file.stem}.pdf'
             shutil.move(pdf_file, new_path)
 

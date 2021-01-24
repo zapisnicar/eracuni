@@ -54,9 +54,9 @@ class Edb:
                 # Save PDF with click on last cell in row 1
                 save_button = find_first_css(invoices[1], 'td:last-child')
                 save_button.click()
-                # Move saved PDF file from data to pdf folder
+                # Move saved PDF file from var to pdf folder
                 storage.move_pdf()
-                # Remember new last_saved in data/storage.yaml
+                # Remember new last_saved in var/storage.yaml
                 storage.last_saved = period
 
             # Logout

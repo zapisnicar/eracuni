@@ -1,9 +1,8 @@
 # eRačuni - Utility bills scraper (Serbian)
 
-- EPS (samo za fizička lica i distributivno područje Beograd)
-- InfoStan
+- EPS (Beograd) i InfoStan računi
 
-### Namena:
+### Kako radi:
 
 - Pronađi poslednje račune sa:
   
@@ -15,7 +14,7 @@
   
 - Ako ima, snimi račun u pdf folder.
 
-- Zapamti koji je poslednji skinuti račun, u data/storage.yaml
+- Zapamti koji je poslednji skinuti račun, u var/storage.yaml
 
 - Ako je došlo do greške u parsiranju web stranice, ispiši problem na stderr i izađi sa statusnim kodom 1.
 

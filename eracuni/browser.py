@@ -13,7 +13,7 @@ from selenium.common.exceptions import NoSuchElementException
 def firefox(config):
     """
     Start browser with disabled "Save PDF" dialog
-    Download files to data folder
+    Download files to var folder
     """
     my_options = Options()
     if config.headless:
@@ -26,7 +26,7 @@ def firefox(config):
     my_profile.set_preference('browser.download.manager.useWindow', False)
     my_profile.set_preference('pdfjs.disabled', True)
     my_profile.set_preference('browser.download.dir',
-                              os.path.join(os.getcwd(), 'data'))
+                              os.path.join(os.getcwd(), 'var'))
     my_profile.set_preference('browser.helperApps.neverAsk.openFile',
                               'application/octet-stream, application/pdf, application/x-www-form-urlencoded')
     my_profile.set_preference('browser.helperApps.neverAsk.saveToDisk',
