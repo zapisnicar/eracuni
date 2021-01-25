@@ -1,5 +1,5 @@
 """
-Data module for configuration, storage and file manipulation
+Data module for configuration, data storage and file manipulation
 """
 
 
@@ -89,7 +89,40 @@ class Config:
         self.headless = cfg['headless']
         self.user_agent = cfg['user_agent']
         self.timeout = cfg['timeout']
-        self.gecko_path = gecko_path()
+
+        self.email_address = cfg['email_address']
+        self.email_password = cfg['email_password']
+        self.receiver_email = cfg['receiver_email']
+        self.smtp_server = cfg['smtp_server']
+        self.ssl_port = cfg['ssl_port']
+
+    @staticmethod
+    def gecko_path():
+        """
+        Return path of geckodriver binary, OS dependent
+        """
+        my_system = platform.system()
+        my_machine = platform.machine()
+        if my_system == 'Linux' and my_machine == 'x86_64':
+            # Linux PC
+            exe_path = r'bin/linux64/geckodriver'
+        elif my_system == 'Linux' and my_machine == 'armv7l':
+            # Linux Raspberry Pi
+            exe_path = r'bin/arm7hf/geckodriver'
+        elif my_system == "Windows":
+            # Windows
+            exe_path = r'bin/win64/geckodriver.exe'
+        elif my_system == "Darwin":
+            # Mac
+            # Notarization Workaround:
+            # https://firefox-source-docs.mozilla.org/testing/geckodriver/Notarization.html
+            exe_path = r'bin/macos/geckodriver'
+        else:
+            # No idea
+            print(f"Unknown OS: {my_system}/{my_machine}", file=sys.stderr)
+            sys.exit(1)
+
+        return exe_path
 
 
 class Storage:
@@ -137,31 +170,3 @@ class Storage:
         for pdf_file in Path('var').glob('**/*.pdf'):
             new_path = f'pdf/{self.file_name_infix}_{today}_{pdf_file.stem}.pdf'
             shutil.move(pdf_file, new_path)
-
-
-def gecko_path():
-    """
-    Return path of geckodriver binary, OS dependent
-    """
-    my_system = platform.system()
-    my_machine = platform.machine()
-    if my_system == 'Linux' and my_machine == 'x86_64':
-        # Linux PC
-        exe_path = r'bin/linux64/geckodriver'
-    elif my_system == 'Linux' and my_machine == 'armv7l':
-        # Linux Raspberry Pi
-        exe_path = r'bin/arm7hf/geckodriver'
-    elif my_system == "Windows":
-        # Windows
-        exe_path = r'bin/win64/geckodriver.exe'
-    elif my_system == "Darwin":
-        # Mac
-        # Notarization Workaround:
-        # https://firefox-source-docs.mozilla.org/testing/geckodriver/Notarization.html
-        exe_path = r'bin/macos/geckodriver'
-    else:
-        # No idea
-        print(f"Unknown OS: {my_system}/{my_machine}", file=sys.stderr)
-        sys.exit(1)
-
-    return exe_path
