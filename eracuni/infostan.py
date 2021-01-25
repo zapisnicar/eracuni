@@ -1,5 +1,5 @@
 """
-InfoStan
+InfoStan Scraper
 """
 
 

@@ -1,5 +1,5 @@
 """
-EPS Beograd
+EPS (Beograd) Scraper
 """
 
 
