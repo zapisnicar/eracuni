@@ -21,8 +21,6 @@ class Notifications:
     def send(self):
         self.email.send()
         self.telegram.send()
-        # print('Email:\n' + self.email.message_body)
-        # print('Telegram:\n' + self.telegram.message_body)
 
 
 class Mail:
@@ -41,6 +39,7 @@ class Mail:
     def send(self):
         if self.enabled and self.message_body != '':
             message = self.message_body
+            # print('Telegram message:\n' + message)
             context = ssl.create_default_context()
             with smtplib.SMTP_SSL(self.smtp_server, self.ssl_port, context=context) as server:
                 try:
@@ -67,7 +66,7 @@ class Telegram:
     def send(self):
         if self.enabled and self.message_body != '':
             message = self.message_body
-            # print('Telegram message:\n' + self.message_body)
+            # print('Telegram message:\n' + message)
             url_req = f'https://api.telegram.org/bot{self.token}/sendMessage?chat_id={self.chat_id}&text={message}'
             results = requests.get(url_req)
             print(results.json())
