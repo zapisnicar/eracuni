@@ -51,10 +51,23 @@ class Config:
       - user_id:
         password:
         alias:
+
     EDB_address:        EDB Login page address
     InfoStan_address:   InfoStan Login page address
     headless:           To start without GUI or not, True or False
     user_agent:         Browser identifier string
+    timeout: 20         Selenium timeout
+
+    email_enabled:      To send emails or not, True of False
+    email_address:      Sender email address
+    email_password:     Sender email password
+    receiver_email:     Receiver email address
+    smtp_server:        SMTP server
+    ssl_port:           SMTP SSL port
+
+    telegram_enabled:   To send Telegram messages or not, True of False
+    telegram_bot_token: Telegram bot API token, in format: 1234567890:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    telegram_chat_id:   Telegram group Chat ID, in format: -11111111111
 
     Accounts with empty user_id are ignored
     If alias is empty, user_id will be used as alias
