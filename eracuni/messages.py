@@ -9,21 +9,33 @@ import requests
 
 
 class Notifications:
+    """
+    Notifications, wrapper for Mail and Telegram
+    """
     def __init__(self, config):
         self.config = config
         self.email = Mail(config)
         self.telegram = Telegram(config)
 
     def add(self, text):
+        """
+        Add text go message body
+        """
         self.email.add(text)
         self.telegram.add(text)
 
     def send(self):
+        """
+        Send message
+        """
         self.email.send()
         self.telegram.send()
 
 
 class Mail:
+    """
+    Email messages
+    """
     def __init__(self, config):
         self.enabled = config.email_enabled
         self.email_address = config.email_address
@@ -34,9 +46,15 @@ class Mail:
         self.message_body = ''
 
     def add(self, text):
+        """
+        Add text to message body
+        """
         self.message_body = self.message_body + text + '\n'
 
     def send(self):
+        """
+        Send email
+        """
         if self.enabled and self.message_body != '':
             message = self.message_body
             # print('Telegram message:\n' + message)
@@ -61,9 +79,15 @@ class Telegram:
         self.message_body = ''
 
     def add(self, text):
+        """
+        Add text to message body
+        """
         self.message_body = self.message_body + text + '\n'
 
     def send(self):
+        """
+        Send telegram
+        """
         if self.enabled and self.message_body != '':
             message = self.message_body
             # print('Telegram message:\n' + message)
