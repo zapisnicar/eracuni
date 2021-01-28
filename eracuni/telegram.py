@@ -5,12 +5,20 @@ import requests
 
 
 class Telegram:
-    pass
+    """
+    Telegram messages
+    """
+    def __init__(self, config):
+        self.token = config.telegram_bot_token
+        self.chat_id = config.telegram_chat_id
+        self.enabled = config.send_telegram
+        self.message = ''
 
+    def add_text(self):
+        pass
 
-def send_msg(text):
-    token = '123456790:xxxxxxxxxxxxxxxxxxxxxx'
-    chat_id = '-11111111111'
-    url_req = f'https://api.telegram.org/bot{token}/sendMessage?chat_id={chat_id}&text={text}'
-    results = requests.get(url_req)
-    print(results.json())
+    def send(self):
+        if self.enabled:
+            url_req = f'https://api.telegram.org/bot{self.token}/sendMessage?chat_id={self.chat_id}&text={self.message}'
+            results = requests.get(url_req)
+            # print(results.json())
