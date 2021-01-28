@@ -19,23 +19,27 @@ from eracuni.data import Config
 from eracuni.browser import firefox
 from eracuni.edb import Edb
 from eracuni.infostan import Infostan
+from eracuni.messages import Notifications
 
 
 def main():
     # Read configuration file
     config = Config()
+    notifications = Notifications(config)
 
     # Start browser
-    browser = firefox(config)
+    # browser = firefox(config)
 
-    # Check EDB bills
-    Edb(browser, config)
+    # # Check EDB bills
+    # Edb(browser, config)
+    #
+    # # Check InfoStan bills
+    # Infostan(browser, config)
+    #
+    # # Quit browser
+    # browser.quit()
 
-    # Check InfoStan bills
-    Infostan(browser, config)
-
-    # Quit browser
-    browser.quit()
+    notifications.send()
 
 
 if __name__ == '__main__':

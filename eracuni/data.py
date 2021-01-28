@@ -90,14 +90,14 @@ class Config:
         self.user_agent = cfg['user_agent']
         self.timeout = cfg['timeout']
 
-        self.send_email = cfg['send_email']
+        self.email_enabled = cfg['email_enabled']
         self.email_address = cfg['email_address']
         self.email_password = cfg['email_password']
         self.receiver_email = cfg['receiver_email']
         self.smtp_server = cfg['smtp_server']
         self.ssl_port = cfg['ssl_port']
 
-        self.send_telegram = cfg['send_telegram']
+        self.telegram_enabled = cfg['telegram_enabled']
         self.telegram_bot_token = cfg['telegram_bot_token']
         self.telegram_chat_id = cfg['telegram_chat_id']
 
