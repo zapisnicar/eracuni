@@ -21,6 +21,8 @@ class Notifications:
     def send(self):
         self.email.send()
         self.telegram.send()
+        # print('Email:\n' + self.email.message_body)
+        # print('Telegram:\n' + self.telegram.message_body)
 
 
 class Mail:

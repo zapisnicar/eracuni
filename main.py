@@ -28,16 +28,16 @@ def main():
     notifications = Notifications(config)
 
     # Start browser
-    # browser = firefox(config)
+    browser = firefox(config)
 
-    # # Check EDB bills
-    # Edb(browser, config)
-    #
-    # # Check InfoStan bills
-    # Infostan(browser, config)
-    #
-    # # Quit browser
-    # browser.quit()
+    # Check EDB bills
+    Edb(browser, config)
+
+    # Check InfoStan bills
+    Infostan(browser, config)
+
+    # Quit browser
+    browser.quit()
 
     notifications.send()
 
