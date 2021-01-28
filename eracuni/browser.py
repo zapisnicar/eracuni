@@ -31,7 +31,7 @@ def firefox(config):
                               'application/octet-stream, application/pdf, application/x-www-form-urlencoded')
     my_profile.set_preference('browser.helperApps.neverAsk.saveToDisk',
                               'application/octet-stream, application/pdf, application/x-www-form-urlencoded')
-    driver = webdriver.Firefox(executable_path=config.gecko_path, options=my_options, firefox_profile=my_profile)
+    driver = webdriver.Firefox(executable_path=config.gecko_path(), options=my_options, firefox_profile=my_profile)
     driver.implicitly_wait(config.timeout)
     return driver
 
