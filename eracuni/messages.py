@@ -67,7 +67,7 @@ class Telegram:
     def send(self):
         if self.enabled and self.message_body != '':
             message = self.message_body
+            # print('Telegram message:\n' + self.message_body)
             url_req = f'https://api.telegram.org/bot{self.token}/sendMessage?chat_id={self.chat_id}&text={message}'
             results = requests.get(url_req)
-            # print(results.json())
-            # print('Telegram message:\n' + self.message_body)
+            print(results.json())
