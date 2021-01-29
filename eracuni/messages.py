@@ -6,91 +6,54 @@ Notifications module, for email and telegram messages
 import smtplib
 import ssl
 import requests
+import sys
 
 
 class Notifications:
     """
-    Notifications, wrapper for Mail and Telegram
+    Send notifications over email and telegram
     """
     def __init__(self, config):
         self.config = config
-        self.email = Mail(config)
-        self.telegram = Telegram(config)
+        self.message_body = ''
 
     def add(self, text):
         """
-        Add text go message body
+        Add text to message body
         """
-        self.email.add(text)
-        self.telegram.add(text)
+        self.message_body = self.message_body + text + '\n'
         print(text)
 
     def send(self):
         """
         Send message
         """
-        self.email.send()
-        self.telegram.send()
+        self.send_email()
+        self.send_telegram()
 
-
-class Mail:
-    """
-    Email messages
-    """
-    def __init__(self, config):
-        self.enabled = config.email_enabled
-        self.email_address = config.email_address
-        self.email_password = config.email_password
-        self.receiver_email = config.receiver_email
-        self.smtp_server = config.smtp_server
-        self.ssl_port = config.ssl_port
-        self.message_body = ''
-
-    def add(self, text):
-        """
-        Add text to message body
-        """
-        self.message_body = self.message_body + text + '\n'
-
-    def send(self):
+    def send_email(self):
         """
         Send email
         """
-        if self.enabled and self.message_body != '':
+        if self.config.email_enabled and self.message_body != '':
             message = f'Novi računi:\n\n{self.message_body}'
-            # print('Telegram message:\n' + message)
             context = ssl.create_default_context()
-            with smtplib.SMTP_SSL(self.smtp_server, self.ssl_port, context=context) as server:
+            with smtplib.SMTP_SSL(self.config.smtp_server, self.config.ssl_port, context=context) as server:
                 try:
-                    server.login(self.email_address, self.email_password)
-                    res = server.sendmail(self.email_address, self.receiver_email, message)
-                    print('email sent!')
+                    server.login(self.config.email_address, self.config.email_password)
+                    res = server.sendmail(self.config.email_address, self.config.receiver_email, message)
                 except:
-                    print("could not login or send the mail.")
+                    print("Can't send email", file=sys.stderr)
 
-
-class Telegram:
-    """
-    Telegram messages
-    """
-    def __init__(self, config):
-        self.enabled = config.telegram_enabled
-        self.token = config.telegram_bot_token
-        self.chat_id = config.telegram_chat_id
-        self.message_body = ''
-
-    def add(self, text):
-        """
-        Add text to message body
-        """
-        self.message_body = self.message_body + text + '\n'
-
-    def send(self):
+    def send_telegram(self):
         """
         Send telegram
         """
-        if self.enabled and self.message_body != '':
+        if self.config.telegram_enabled and self.message_body != '':
             message = f'Novi računi:\n\n{self.message_body}'
-            url_req = f'https://api.telegram.org/bot{self.token}/sendMessage?chat_id={self.chat_id}&text={message}'
+            token = self.config.telegram_bot_token
+            chat_id = self.config.telegram_chat_id
+            url_req = f'https://api.telegram.org/bot{token}/sendMessage?chat_id={chat_id}&text={message}'
             results = requests.get(url_req)
-            print(results.json())
+            if not results.json()['ok']:
+                print("Can't send telegram", file=sys.stderr)
