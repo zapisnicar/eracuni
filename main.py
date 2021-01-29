@@ -31,14 +31,15 @@ def main():
     browser = firefox(config)
 
     # Check EDB bills
-    Edb(browser, config)
+    Edb(browser, config, notifications)
 
     # Check InfoStan bills
-    Infostan(browser, config)
+    Infostan(browser, config, notifications)
 
     # Quit browser
     browser.quit()
 
+    # Send notifications about new bills
     notifications.send()
 
 

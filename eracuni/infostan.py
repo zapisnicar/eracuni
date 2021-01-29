@@ -13,9 +13,10 @@ from selenium.webdriver.support import expected_conditions
 
 
 class Infostan:
-    def __init__(self, driver, config):
+    def __init__(self, driver, config, notifications):
         self.driver = driver
         self.config = config
+        self.notifications = notifications
 
         for account in self.config.infostan_accounts:
             # Load main page
@@ -60,7 +61,8 @@ class Infostan:
                     back_button.click()
                 else:
                     # New bill!
-                    print(f'InfoStan {account.alias} {i} - {last_bill_date}')
+                    # Add notification line
+                    self.notifications.add(f'InfoStan {account.alias} {i} - {last_bill_date}')
 
                     # Click on top row, for right side menu
                     last_row.click()

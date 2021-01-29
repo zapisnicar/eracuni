@@ -4,14 +4,16 @@ EPS (Beograd) Scraper
 
 
 import sys
+import copy
 from eracuni.data import Storage
 from eracuni.browser import find_first_id, find_first_css, find_all_css
 
 
 class Edb:
-    def __init__(self, driver, config):
+    def __init__(self, driver, config, notifications):
         self.driver = driver
         self.config = config
+        self.notifications = notifications
 
         for account in self.config.edb_accounts:
             storage = Storage(f'edb_{account.alias}')
@@ -50,7 +52,8 @@ class Edb:
 
             # Anything new?
             if period != storage.last_saved:
-                print(f'EDB {account.alias} - {period}')
+                # Add notification line
+                self.notifications.add(f'EDB {account.alias} - {period}')
                 # Save PDF with click on last cell in row 1
                 save_button = find_first_css(invoices[1], 'td:last-child')
                 save_button.click()
