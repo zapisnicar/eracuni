@@ -57,7 +57,7 @@ class Mail:
         Send email
         """
         if self.enabled and self.message_body != '':
-            message = f'Novi računi:\n{self.message_body}'
+            message = f'Novi računi:\n\n{self.message_body}'
             # print('Telegram message:\n' + message)
             context = ssl.create_default_context()
             with smtplib.SMTP_SSL(self.smtp_server, self.ssl_port, context=context) as server:
@@ -90,7 +90,7 @@ class Telegram:
         Send telegram
         """
         if self.enabled and self.message_body != '':
-            message = f'Novi računi:\n{self.message_body}'
+            message = f'Novi računi:\n\n{self.message_body}'
             url_req = f'https://api.telegram.org/bot{self.token}/sendMessage?chat_id={self.chat_id}&text={message}'
             results = requests.get(url_req)
             print(results.json())

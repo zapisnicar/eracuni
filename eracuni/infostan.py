@@ -62,8 +62,7 @@ class Infostan:
                 else:
                     # New bill!
                     # Add notification line
-                    self.notifications.add(f'InfoStan {account.alias} {i} - {last_bill_date}')
-
+                    self.notifications.add(f'InfoStan ({account.alias} {i}) za {last_bill_date.lower()}')
                     # Click on top row, for right side menu
                     last_row.click()
                     # Click on "Pregled računa" button

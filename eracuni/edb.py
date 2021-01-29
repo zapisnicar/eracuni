@@ -53,7 +53,7 @@ class Edb:
             # Anything new?
             if period != storage.last_saved:
                 # Add notification line
-                self.notifications.add(f'EDB {account.alias} - {period}')
+                self.notifications.add(f'EDB ({account.alias}) za {period.lower()}')
                 # Save PDF with click on last cell in row 1
                 save_button = find_first_css(invoices[1], 'td:last-child')
                 save_button.click()
