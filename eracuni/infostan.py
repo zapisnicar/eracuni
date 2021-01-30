@@ -10,6 +10,7 @@ from eracuni.browser import find_first_id, find_first_css, find_all_css
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions
+from selenium.webdriver.common.action_chains import ActionChains
 
 
 class Infostan:
@@ -19,6 +20,7 @@ class Infostan:
         self.notifications = notifications
 
         for account in self.config.infostan_accounts:
+
             # Load main page
             try:
                 self.driver.get(self.config.infostan_url)
@@ -33,7 +35,17 @@ class Infostan:
             login_password = find_first_css(self.driver, "input[formcontrolname='password']")
             login_password.send_keys(account.password)
             login_button = find_first_css(self.driver, '.btn-blue')
+            # Hack, to remove deepLinkingModal div, it obscures login button in headless mode
+            driver.execute_script("""
+            var element = document.querySelector(".deepLinkingModal");
+            if (element)
+                element.parentNode.removeChild(element);
+            """)
+            time.sleep(1)
             login_button.click()
+
+            # action = ActionChains(driver)
+            # action.move_to_element(login_button).click().perform()
 
             # Choose Infostan icon
             icon_infostan = find_first_id(self.driver, '1_ЈКП Инфостан Технологије')
