@@ -92,7 +92,7 @@ def remove_element_by_css(browser, target):
     """)
 
 
-def screenshot_browser_windows(browser, file):
+def screenshot_browser_window(browser, file):
     """
     Take screenshot of visible browser window and save as file
     Works in headless mode to
