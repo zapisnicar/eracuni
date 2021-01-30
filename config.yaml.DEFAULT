@@ -22,7 +22,7 @@ EDB_address: http://portal.edb.rs/domportal_js/faces/common/Login.jspx
 InfoStan_address: https://esanduce.rs/prijava
 headless: True
 user_agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/10.0
-timeout: 20
+timeout: 10
 email_enabled: False
 email_address: sender@gmail.com
 email_password: your_password
@@ -31,4 +31,4 @@ smtp_server: smtp.gmail.com
 ssl_port: 465
 telegram_enabled: False
 telegram_bot_token: 1234567890:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-telegram_chat_id: -11111111111
+telegram_chat_id: -1234567890
