@@ -43,9 +43,6 @@ class Infostan:
             time.sleep(1)
             login_button.click()
 
-            # action = ActionChains(driver)
-            # action.move_to_element(login_button).click().perform()
-
             # Choose Infostan icon
             icon_infostan = find_first_id(self.driver, '1_ЈКП Инфостан Технологије')
             icon_infostan.click()
