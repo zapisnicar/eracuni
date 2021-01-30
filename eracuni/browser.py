@@ -105,6 +105,9 @@ def screenshot_full_page(browser, file):
     Take screenshot of full page and save as file
     Works ONLY in headless mode
     """
-    S = lambda X: browser.execute_script('return document.body.parentNode.scroll' + X)
-    browser.set_window_size(S('Width'), S('Height'))  # May need manual adjustment
+    # S = lambda X: browser.execute_script('return document.body.parentNode.scroll' + X)
+    # browser.set_window_size(S('Width'), S('Height'))  # May need manual adjustment
+    width = browser.execute_script('return document.body.parentNode.scrollWidth')
+    height = browser.execute_script('return document.body.parentNode.scrollHeight')
+    browser.set_window_size(width, height)  # May need manual adjustment
     browser.find_element_by_tag_name('body').screenshot(file)
