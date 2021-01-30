@@ -79,3 +79,14 @@ def find_all_by_css(browser, target):
         print(f"Can't find CSS selector: {target}", file=sys.stderr)
         browser.quit()
         sys.exit(1)
+
+
+def remove_element_by_css(browser, target):
+    """
+    Locate element by CSS selector, and remove it from DOM, with JavasSript code
+    """
+    browser.execute_script(f"""
+    var element = document.querySelector("{target}");
+    if (element)
+        element.parentNode.removeChild(element);
+    """)

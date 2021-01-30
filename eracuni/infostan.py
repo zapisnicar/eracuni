@@ -6,7 +6,7 @@ InfoStan Scraper
 import sys
 import time
 from eracuni.data import Storage
-from eracuni.browser import find_first_by_id, find_first_by_css, find_all_by_css
+from eracuni.browser import find_first_by_id, find_first_by_css, find_all_by_css, remove_element_by_css
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions
@@ -35,12 +35,7 @@ class Infostan:
             login_password.send_keys(account.password)
             login_button = find_first_by_css(self.driver, '.btn-blue')
             # Hack, to remove deepLinkingModal div, it hides login button in headless mode
-            driver.execute_script("""
-            var element = document.querySelector(".deepLinkingModal");
-            if (element)
-                element.parentNode.removeChild(element);
-            """)
-            time.sleep(1)
+            remove_element_by_css(driver, '.deepLinkingModal')
             login_button.click()
 
             # Choose Infostan icon
