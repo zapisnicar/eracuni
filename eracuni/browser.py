@@ -90,3 +90,21 @@ def remove_element_by_css(browser, target):
     if (element)
         element.parentNode.removeChild(element);
     """)
+
+
+def screenshot_browser_windows(browser, file):
+    """
+    Take screenshot of visible browser window and save as file
+    Works in headless mode to
+    """
+    browser.get_screenshot_as_file(file)
+
+
+def screenshot_full_page(browser, file):
+    """
+    Take screenshot of full page and save as file
+    Works ONLY in headless mode
+    """
+    S = lambda X: browser.execute_script('return document.body.parentNode.scroll' + X)
+    browser.set_window_size(S('Width'), S('Height'))  # May need manual adjustment
+    browser.find_element_by_tag_name('body').screenshot(file)
