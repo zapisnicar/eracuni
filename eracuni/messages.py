@@ -34,10 +34,17 @@ class Notifications:
 
     def send_email(self):
         """
-        Send email
+        Send email, only ASCII text
         """
         if self.config.email_enabled and self.message_body != '':
-            message = f'Novi računi:\n\n{self.message_body}'
+            message = f"""\
+From: {self.config.email_address}
+To: {self.config.receiver_email}
+Subject: Novi racuni
+
+{self.message_body}
+"""
+            message = message.encode('ascii', 'ignore')
             context = ssl.create_default_context()
             with smtplib.SMTP_SSL(self.config.smtp_server, self.config.ssl_port, context=context) as server:
                 try:
