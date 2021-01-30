@@ -36,7 +36,7 @@ def firefox(config):
     return driver
 
 
-def find_first_id(browser, target):
+def find_first_by_id(browser, target):
     """
     Locate web element by id attribute
     Return first one
@@ -51,7 +51,7 @@ def find_first_id(browser, target):
         sys.exit(1)
 
 
-def find_first_css(browser, target):
+def find_first_by_css(browser, target):
     """
     Locate web element by css selector
     Return first one
@@ -66,7 +66,7 @@ def find_first_css(browser, target):
         sys.exit(1)
 
 
-def find_all_css(browser, target):
+def find_all_by_css(browser, target):
     """
     Locate all web elements by css selector
     Return list of elements
