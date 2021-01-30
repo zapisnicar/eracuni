@@ -172,7 +172,7 @@ class Storage:
         """
         Write var/{file_name_infix}.yaml
         """
-        # TODO fix utf-8 encoding
+        # TODO Fix UTF-8 characters in filenames
         self.__last_saved = period.strip()
         my_storage = {'last_saved': self.__last_saved}
         with open(self.yaml_path, 'w') as fout:
