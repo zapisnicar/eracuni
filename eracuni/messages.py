@@ -34,7 +34,7 @@ class Notifications:
 
     def send_email(self):
         """
-        Send email, only ASCII text
+        Send email, text ASCII only
         """
         if self.config.email_enabled and self.message_body != '':
             message = f"""\
