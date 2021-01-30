@@ -11,7 +11,7 @@ import sys
 
 class Notifications:
     """
-    Send notifications over email and telegram
+    Send notifications over console, email and telegram
     """
     def __init__(self, config):
         self.config = config
@@ -22,6 +22,7 @@ class Notifications:
         Add text to message body
         """
         self.message_body = self.message_body + text + '\n'
+        # Report also to console
         print(text)
 
     def send(self):
