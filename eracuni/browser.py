@@ -83,7 +83,7 @@ def find_all_by_css(browser, target):
 
 def remove_element_by_css(browser, target):
     """
-    Locate element by CSS selector, and remove it from DOM, with JavasSript code
+    Locate element by CSS selector, and remove it from DOM, with JavasScript code
     """
     browser.execute_script(f"""
     var element = document.querySelector("{target}");
