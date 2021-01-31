@@ -64,7 +64,7 @@ class Infostan:
                     back_button.click()
                 else:
                     # New bill!
-                    # Add notification line
+                    # Add notification
                     self.notifications.add(f'InfoStan ({account.alias} {i}) za {last_bill_date.lower()}')
                     # Click on top row, for right side menu
                     last_row.click()

@@ -4,7 +4,7 @@
 
 ### Kako radi:
 
-- Pronađi poslednje račune sa:
+- Pronađi poslednje račune sa EDB i Infostan sajtova:
   
     http://portal.edb.rs
 
@@ -12,7 +12,7 @@
 
 - Ako nema novog računa, završi program.
   
-- Ako ima, snimi račun u pdf folder.
+- Ako ima, snimi račun u pdf folder i pošalji obaveštenje na eMail/Telegram.
 
 - Zapamti koji je poslednji skinuti račun, u var/storage.yaml
 
@@ -44,7 +44,7 @@ pip install -r requirements.txt
 
 - Preimenuj config.yaml.DEFAULT u config.yaml
 
-- Edituj config.yaml i upiši svoj ID, šifru i opciono alijas. Može se koristiti proizvoljan broj naloga. Moraju biti u YAML formatu, a neaktivni nalozi trebaju ili da se obrišu ili da imaju prazan string za username. Alijas će se koristiti kao prefiks pri snimanju fajlova, recimo "stan" ili "garaza". Mora biti jedinstven.
+- Edituj config.yaml i upiši svoj ID, šifru i opciono alijas. Može se koristiti proizvoljan broj naloga. Moraju biti u YAML formatu, a neaktivni nalozi trebaju ili da se obrišu ili da imaju prazan string za username. Alijas će se koristiti kao prefiks pri snimanju fajlova, recimo "stan" ili "garaza". Mora biti jedinstven. Konfiguriši eMail i Telegram opcije.
 
 - Startuj program sa:
 

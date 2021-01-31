@@ -41,6 +41,7 @@ class Config:
       - user_id:
         password:
         alias:
+
     InfoStan_Accounts:  List of InfoStan accounts
       - user_id:        user id
         password:       user password
@@ -77,6 +78,7 @@ class Config:
         with open('config.yaml') as f:
             cfg = yaml.full_load(f)
 
+        # Get all EDB accounts
         self.edb_accounts = []
         for user in cfg['EDB_Accounts']:
             user_id = str(user['user_id']).strip()
@@ -87,6 +89,7 @@ class Config:
                     alias = user_id
                 self.edb_accounts.append(Account(user_id, password, alias))
 
+        # Get all InfoStan accounts
         self.infostan_accounts = []
         for user in cfg['InfoStan_Accounts']:
             user_id = str(user['username']).strip()

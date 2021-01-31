@@ -9,7 +9,7 @@ Pronađi poslednje račune za:
 - Infostan sa https://esanduce.rs/
 
 Ako nema novog računa, završi program.
-Ako ima, snimi račun u pdf folder.
+Ako ima, snimi račun u pdf folder i pošalji obaveštenje na eMail/Telegram.
 Zapamti koji je poslednji skinuti račun, u var/storage.yaml
 Ako je došlo do greške u parsiranju web stranice, ispiši problem na stderr i izađi sa statusnim kodom 1.
 """

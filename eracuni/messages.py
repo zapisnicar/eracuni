@@ -1,5 +1,5 @@
 """
-Notifications module, for email and telegram messages
+Notifications module, send messages to console stdout, eMail and Telegram
 """
 
 
@@ -11,7 +11,7 @@ import sys
 
 class Notifications:
     """
-    Send notifications over console, email and telegram
+    Send notifications over console stdout, eMail and Telegram
     """
     def __init__(self, config):
         self.config = config
@@ -19,10 +19,10 @@ class Notifications:
 
     def add(self, text):
         """
-        Add text to message body
+        Add text to message body and report to stdout
         """
         self.message_body = self.message_body + text + '\n'
-        # Report also to console
+        # Report also to console stdout
         print(text)
 
     def send(self):
@@ -55,7 +55,7 @@ Subject: Novi računi
 
     def send_telegram(self):
         """
-        Send telegram
+        Send Telegram
         """
         if self.config.telegram_enabled and self.message_body != '':
             message = f'Novi računi:\n\n{self.message_body}'
@@ -64,4 +64,4 @@ Subject: Novi računi
             url_req = f'https://api.telegram.org/bot{token}/sendMessage?chat_id={chat_id}&text={message}'
             results = requests.get(url_req)
             if not results.json()['ok']:
-                print("Can't send telegram", file=sys.stderr)
+                print("Can't send Telegram", file=sys.stderr)
