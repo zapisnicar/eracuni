@@ -160,7 +160,7 @@ class Storage:
         self.file_name_infix = file_name_infix
         self.yaml_path = f'var/storage_{self.file_name_infix}.yaml'
         if os.path.isfile(self.yaml_path):
-            with open(self.yaml_path) as fin:
+            with open(self.yaml_path, encoding='utf8') as fin:
                 my_storage = yaml.full_load(fin)
             self.__last_saved = my_storage['last_saved'].strip()
         else:
@@ -180,7 +180,7 @@ class Storage:
         my_storage = {'last_saved': self.__last_saved}
         with open(self.yaml_path, 'w') as fout:
             # Dump my_storage with unicode characters to
-            yaml.dump(my_storage, fout, allow_unicode=True)
+            yaml.dump(my_storage, fout, encoding='utf8')
 
     def move_pdf(self):
         """
