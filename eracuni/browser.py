@@ -106,6 +106,7 @@ def screenshot_full_page(browser, file):
     Works ONLY in headless mode
     """
     # TODO fix height size
-    def size(x): return browser.execute_script('return document.body.parentNode.scroll' + x)
+    def size(x):
+        return browser.execute_script('return document.body.parentNode.scroll' + x)
     browser.set_window_size(size('Width'), size('Height'))  # May need manual adjustment
     browser.find_element_by_tag_name('body').screenshot(file)
