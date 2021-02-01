@@ -129,3 +129,4 @@ dmypy.json
 
 .idea/
 config.yaml
+telegram_bot_howto.md

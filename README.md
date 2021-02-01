@@ -4,7 +4,7 @@
 
 ### Kako radi:
 
-- Pronađi poslednje račune sa EDB i Infostan sajtova:
+- Pronađi poslednje račune sa EDB i Infostan portala:
   
     http://portal.edb.rs
 
@@ -44,7 +44,9 @@ pip install -r requirements.txt
 
 - Preimenuj config.yaml.DEFAULT u config.yaml
 
-- Edituj config.yaml i upiši svoj ID, šifru i opciono alijas. Može se koristiti proizvoljan broj naloga. Moraju biti u YAML formatu, a neaktivni nalozi trebaju ili da se obrišu ili da imaju prazan string za username. Alijas će se koristiti kao prefiks pri snimanju fajlova, recimo "stan" ili "garaza". Mora biti jedinstven. Konfiguriši eMail i Telegram opcije.
+- Edituj config.yaml i upiši svoj ID, šifru i opciono alijas. Može se koristiti proizvoljan broj naloga. Moraju biti u YAML formatu, a neaktivni nalozi trebaju ili da se obrišu ili da imaju prazan string za username. Alijas će se koristiti kao prefiks pri snimanju fajlova, recimo "stan" ili "garaza". Mora biti jedinstven. Po želji, konfiguriši eMail i Telegram. Savete za pravljenje Telegram bota pročitaj ovde: 
+
+https://gist.github.com/zapisnicar/247d53f8e3980f6013a221d8c7459dc3
 
 - Startuj program sa:
 
