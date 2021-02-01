@@ -57,7 +57,7 @@ class Config:
     InfoStan_address:   InfoStan Login page address
     headless:           To start without GUI or not, True or False
     user_agent:         Browser identifier string
-    timeout: 20         Selenium timeout
+    timeout:            Selenium timeout
 
     email_enabled:      To send emails or not, True of False
     email_address:      Sender email address
