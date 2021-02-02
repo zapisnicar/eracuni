@@ -1,4 +1,4 @@
-# eRačuni - Utility bills scraper (Serbian)
+# Račundžija - Utility bills scraper (Serbian)
 
 - EPS (Beograd) i InfoStan računi
 

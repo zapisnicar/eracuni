@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-eRačuni - Utility bills scraper (Serbian)
+Račundžija - Utility bills scraper (Serbian)
 
 - EPS (Beograd) i Infostan računi
 
