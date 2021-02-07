@@ -21,7 +21,7 @@ class Account:
         password: string
         alias: string
     """
-    def __init__(self, user_id, password, alias):
+    def __init__(self, user_id: str, password: str, alias: str) -> None:
         self.user_id = user_id
         self.password = password
         self.alias = alias
@@ -74,7 +74,7 @@ class Config:
     If alias is empty, user_id will be used as alias
     There is no limit for how many accounts config file can have
     """
-    def __init__(self):
+    def __init__(self) -> None:
         with open('config.yaml') as f:
             cfg = yaml.full_load(f)
 
@@ -118,7 +118,7 @@ class Config:
         self.telegram_chat_id = cfg['telegram_chat_id']
 
     @staticmethod
-    def gecko_path():
+    def gecko_path() -> str:
         """
         Return path of geckodriver binary, OS dependent
         """
@@ -152,7 +152,7 @@ class Storage:
     Read and write var/storage_{file_name_infix}.yaml files, every user_id have separate one
     Use last_saved property as setter/getter
     """
-    def __init__(self, file_name_infix):
+    def __init__(self, file_name_infix: str) -> None:
         """
         Read last_saved from var/storage_{file_name_infix}.yaml
         If file does not exist, last_saved is "none"
@@ -167,11 +167,11 @@ class Storage:
             self.__last_saved = 'none'
 
     @property
-    def last_saved(self):
+    def last_saved(self) -> str:
         return self.__last_saved
 
     @last_saved.setter
-    def last_saved(self, period):
+    def last_saved(self, period: str) -> None:
         """
         Write var/{file_name_infix}.yaml
         """
@@ -182,7 +182,7 @@ class Storage:
             # Dump my_storage with unicode characters to
             yaml.dump(my_storage, fout, encoding='utf8')
 
-    def move_pdf(self):
+    def move_pdf(self) -> None:
         """
         Rename saved PDF file as {file_name_infix}_{YYYY-MM}_{original name}.pdf
         and move it to pdf subfolder
@@ -190,4 +190,4 @@ class Storage:
         today = date.today().strftime('%Y-%m')
         for pdf_file in Path('var').glob('**/*.pdf'):
             new_path = f'pdf/{self.file_name_infix}_{today}_{pdf_file.stem}.pdf'
-            shutil.move(pdf_file, new_path)
+            shutil.move(str(pdf_file), new_path)

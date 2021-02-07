@@ -7,17 +7,18 @@ import smtplib
 import ssl
 import requests
 import sys
+from eracuni.data import Config
 
 
 class Notifications:
     """
     Send notifications over console stdout, eMail and Telegram
     """
-    def __init__(self, config):
+    def __init__(self, config: Config) -> None:
         self.config = config
         self.message_body = ''
 
-    def add(self, text):
+    def add(self, text: str) -> None:
         """
         Add text to message body and report to stdout
         """
@@ -25,14 +26,14 @@ class Notifications:
         # Report also to console stdout
         print(text)
 
-    def send(self):
+    def send(self) -> None:
         """
         Send message
         """
         self.send_email()
         self.send_telegram()
 
-    def send_email(self):
+    def send_email(self) -> None:
         """
         Send email, UTF-8 encoded text
         """
@@ -44,16 +45,16 @@ Subject: Novi računi
 
 {self.message_body}
 """
-            message = message.encode('utf8')
             context = ssl.create_default_context()
             with smtplib.SMTP_SSL(self.config.smtp_server, self.config.ssl_port, context=context) as server:
                 try:
                     server.login(self.config.email_address, self.config.email_password)
-                    res = server.sendmail(self.config.email_address, self.config.receiver_email, message)
+                    res = server.sendmail(
+                        self.config.email_address, self.config.receiver_email, message.encode('utf8'))
                 except:
                     print("Can't send email", file=sys.stderr)
 
-    def send_telegram(self):
+    def send_telegram(self) -> None:
         """
         Send Telegram
         """

@@ -5,12 +5,14 @@ Browser module, as Selenium wrapper
 
 import os
 import sys
+from typing import Collection, Any
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
 from selenium.common.exceptions import NoSuchElementException
+from eracuni.data import Config
 
 
-def firefox(config):
+def firefox(config: Config) -> webdriver:
     """
     Start browser with disabled "Save PDF" dialog
     Download files to var folder
@@ -36,7 +38,7 @@ def firefox(config):
     return driver
 
 
-def find_first_by_id(browser, target):
+def find_first_by_id(browser: webdriver, target: str) -> webdriver:
     """
     Locate web element by id attribute
     Return first one
@@ -51,7 +53,7 @@ def find_first_by_id(browser, target):
         sys.exit(1)
 
 
-def find_first_by_css(browser, target):
+def find_first_by_css(browser: webdriver, target: str) -> webdriver:
     """
     Locate web element by css selector
     Return first one
@@ -66,7 +68,7 @@ def find_first_by_css(browser, target):
         sys.exit(1)
 
 
-def find_all_by_css(browser, target):
+def find_all_by_css(browser: webdriver, target: str) -> Collection[Any]:
     """
     Locate all web elements by css selector
     Return list of elements
@@ -81,7 +83,7 @@ def find_all_by_css(browser, target):
         sys.exit(1)
 
 
-def remove_element_by_css(browser, target):
+def remove_element_by_css(browser: webdriver, target: str) -> None:
     """
     Locate element by CSS selector, and remove it from DOM, with JavasScript code
     """
@@ -92,7 +94,7 @@ def remove_element_by_css(browser, target):
     """)
 
 
-def screenshot_browser_window(browser, file):
+def screenshot_browser_window(browser: webdriver, file: str) -> None:
     """
     Take screenshot of visible browser window and save as file
     Works in headless mode to
@@ -100,7 +102,7 @@ def screenshot_browser_window(browser, file):
     browser.get_screenshot_as_file(file)
 
 
-def screenshot_full_page(browser, file):
+def screenshot_full_page(browser: webdriver, file: str) -> None:
     """
     Take screenshot of full page and save as file
     Works ONLY in headless mode
