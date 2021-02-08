@@ -5,7 +5,7 @@ Browser module, as Selenium wrapper
 
 import os
 import sys
-from typing import Collection, Any
+from typing import Any, List
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
 from selenium.common.exceptions import NoSuchElementException
@@ -68,7 +68,7 @@ def find_first_by_css(browser: webdriver, target: str) -> webdriver:
         sys.exit(1)
 
 
-def find_all_by_css(browser: webdriver, target: str) -> Collection[Any]:
+def find_all_by_css(browser: webdriver, target: str) -> List[Any]:
     """
     Locate all web elements by css selector
     Return list of elements

@@ -7,7 +7,7 @@ import sys
 from eracuni.data import Storage, Config
 from eracuni.browser import find_first_by_id, find_first_by_css, find_all_by_css, webdriver
 from eracuni.messages import Notifications
-from typing import cast, List
+
 
 class Edb:
     def __init__(self, driver: webdriver, config: Config, notifications: Notifications) -> None:

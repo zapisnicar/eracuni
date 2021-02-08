@@ -10,6 +10,7 @@ import platform
 import shutil
 from datetime import date
 from pathlib import Path
+from typing import List, Dict, Any
 
 
 class Account:
@@ -76,11 +77,34 @@ class Config:
     """
     def __init__(self) -> None:
         with open('config.yaml') as f:
-            cfg = yaml.full_load(f)
+            self.yaml_cfg: Dict[str, Any] = yaml.full_load(f)
 
+        self.edb_accounts: List[Account] = []
+        self.setup_edb_accounts()
+        self.edb_url: str = self.yaml_cfg['EDB_address']
+
+        self.infostan_accounts: List[Account] = []
+        self.setup_infostan_accounts()
+        self.infostan_url: str = self.yaml_cfg['InfoStan_address']
+
+        self.headless: bool = self.yaml_cfg['headless']
+        self.user_agent: str = self.yaml_cfg['user_agent']
+        self.timeout: float = self.yaml_cfg['timeout']
+
+        self.email_enabled: bool = self.yaml_cfg['email_enabled']
+        self.email_address: str = self.yaml_cfg['email_address']
+        self.email_password: str = self.yaml_cfg['email_password']
+        self.receiver_email: str = self.yaml_cfg['receiver_email']
+        self.smtp_server: str = self.yaml_cfg['smtp_server']
+        self.ssl_port: int = self.yaml_cfg['ssl_port']
+
+        self.telegram_enabled: bool = self.yaml_cfg['telegram_enabled']
+        self.telegram_bot_token: str = self.yaml_cfg['telegram_bot_token']
+        self.telegram_chat_id: str = self.yaml_cfg['telegram_chat_id']
+
+    def setup_edb_accounts(self) -> None:
         # Get all EDB accounts
-        self.edb_accounts = []
-        for user in cfg['EDB_Accounts']:
+        for user in self.yaml_cfg['EDB_Accounts']:
             user_id = str(user['user_id']).strip()
             if user_id != 'None':
                 password = str(user['password'])
@@ -89,9 +113,9 @@ class Config:
                     alias = user_id
                 self.edb_accounts.append(Account(user_id, password, alias))
 
+    def setup_infostan_accounts(self) -> None:
         # Get all InfoStan accounts
-        self.infostan_accounts = []
-        for user in cfg['InfoStan_Accounts']:
+        for user in self.yaml_cfg['InfoStan_Accounts']:
             user_id = str(user['username']).strip()
             if user_id != 'None':
                 password = str(user['password'])
@@ -99,23 +123,6 @@ class Config:
                 if alias == 'None':
                     alias = user_id
                 self.infostan_accounts.append(Account(user_id, password, alias))
-
-        self.edb_url = cfg['EDB_address']
-        self.infostan_url = cfg['InfoStan_address']
-        self.headless = cfg['headless']
-        self.user_agent = cfg['user_agent']
-        self.timeout = cfg['timeout']
-
-        self.email_enabled = cfg['email_enabled']
-        self.email_address = cfg['email_address']
-        self.email_password = cfg['email_password']
-        self.receiver_email = cfg['receiver_email']
-        self.smtp_server = cfg['smtp_server']
-        self.ssl_port = cfg['ssl_port']
-
-        self.telegram_enabled = cfg['telegram_enabled']
-        self.telegram_bot_token = cfg['telegram_bot_token']
-        self.telegram_chat_id = cfg['telegram_chat_id']
 
     @staticmethod
     def gecko_path() -> str:

@@ -5,15 +5,16 @@ InfoStan Scraper
 
 import sys
 import time
-from eracuni.data import Storage
-from eracuni.browser import find_first_by_id, find_first_by_css, find_all_by_css, remove_element_by_css
+from eracuni.data import Storage, Config
+from eracuni.browser import find_first_by_id, find_first_by_css, find_all_by_css, remove_element_by_css, webdriver
+from eracuni.messages import Notifications
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions
 
 
 class Infostan:
-    def __init__(self, driver, config, notifications):
+    def __init__(self, driver: webdriver, config: Config, notifications: Notifications) -> None:
         self.driver = driver
         self.config = config
         self.notifications = notifications

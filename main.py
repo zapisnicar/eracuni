@@ -22,7 +22,7 @@ from eracuni.infostan import Infostan
 from eracuni.messages import Notifications
 
 
-def main():
+def main() -> None:
     # Read configuration file
     config = Config()
     notifications = Notifications(config)
