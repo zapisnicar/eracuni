@@ -100,7 +100,7 @@ class Config:
 
         self.telegram_enabled: bool = self.yaml_cfg['telegram_enabled']
         self.telegram_bot_token: str = self.yaml_cfg['telegram_bot_token']
-        self.telegram_chat_id: str = self.yaml_cfg['telegram_chat_id']
+        self.telegram_chat_id: str = str(self.yaml_cfg['telegram_chat_id'])
 
     def setup_edb_accounts(self) -> None:
         # Get all EDB accounts
