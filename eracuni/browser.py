@@ -111,4 +111,5 @@ def screenshot_full_page(browser: webdriver, file: str) -> None:
     def size(x):
         return browser.execute_script('return document.body.parentNode.scroll' + x)
     browser.set_window_size(size('Width'), size('Height'))  # May need manual adjustment
-    browser.find_element_by_tag_name('body').screenshot(file)
+    # browser.find_element_by_tag_name('body').screenshot(file)
+    browser.save_screenshot(file)
