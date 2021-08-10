@@ -8,9 +8,9 @@ import time
 from eracuni.data import Storage, Config
 from eracuni.browser import find_first_by_id, find_first_by_css, find_all_by_css, remove_element_by_css, webdriver
 from eracuni.messages import Notifications
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions
+from selenium.webdriver.common.by import By  # type: ignore
+from selenium.webdriver.support.ui import WebDriverWait  # type: ignore
+from selenium.webdriver.support import expected_conditions  # type: ignore
 
 
 class Infostan:

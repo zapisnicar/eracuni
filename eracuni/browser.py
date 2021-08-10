@@ -6,9 +6,9 @@ Browser module, as Selenium wrapper
 import os
 import sys
 from typing import List, Any
-from selenium import webdriver
-from selenium.webdriver.firefox.options import Options
-from selenium.common.exceptions import NoSuchElementException
+from selenium import webdriver  # type: ignore
+from selenium.webdriver.firefox.options import Options  # type: ignore
+from selenium.common.exceptions import NoSuchElementException  # type: ignore
 from eracuni.data import Config
 
 
