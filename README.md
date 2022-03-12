@@ -58,9 +58,9 @@ python main.py
 
 ### Platforme:
 
-- Radi na Linux x64, Windows x64 i Raspbian arm7hf platformama.
+- Radi na Linux x64 i Windows x64 platformama.
 
-- Za MacOS, prouči rešenje problema notarizacije, nije testirano:
+- Raspbian arm7hf nije testiran. Za MacOS, prouči rešenje problema notarizacije, nije testirano:
 
 https://firefox-source-docs.mozilla.org/testing/geckodriver/Notarization.html
 
