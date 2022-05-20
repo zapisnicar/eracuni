@@ -43,6 +43,17 @@ class Config:
         password:
         alias:
 
+    EDB_Merna_Grupa_Accounts:   List of EDB Merna grupa accounts
+      - user_id:                user id
+        password:               user password
+        alias:                  alias, like home2 or office
+      - user_id:                other id
+        password:               other password
+        alias:
+      - user_id:
+        password:
+        alias:
+
     InfoStan_Accounts:  List of InfoStan accounts
       - user_id:        user id
         password:       user password
@@ -54,11 +65,12 @@ class Config:
         password:
         alias:
 
-    EDB_address:        EDB Login page address
-    InfoStan_address:   InfoStan Login page address
-    headless:           To start without GUI or not, True or False
-    user_agent:         Browser identifier string
-    timeout:            Selenium timeout
+    EDB_address:                EDB Login page address
+    EDB_merna_grupa_address:    EDB merna grupa login address
+    InfoStan_address:           InfoStan Login page address
+    headless:                   To start without GUI or not, True or False
+    user_agent:                 Browser identifier string
+    timeout:                    Selenium timeout
 
     email_enabled:      To send emails or not, True of False
     email_address:      Sender email address
@@ -82,6 +94,10 @@ class Config:
         self.edb_accounts: List[Account] = []
         self.setup_edb_accounts()
         self.edb_url: str = self.yaml_cfg['EDB_address']
+
+        self.edb_merna_grupa_accounts: List[Account] = []
+        self.setup_edb_merna_grupa_accounts()
+        self.edb_merna_grupa_url = self.yaml_cfg['EDB_merna_grupa_address']
 
         self.infostan_accounts: List[Account] = []
         self.setup_infostan_accounts()
@@ -112,6 +128,17 @@ class Config:
                 if alias == 'None':
                     alias = user_id
                 self.edb_accounts.append(Account(user_id, password, alias))
+
+    def setup_edb_merna_grupa_accounts(self) -> None:
+        # Get all EDB merna grupa accounts
+        for user in self.yaml_cfg['EDB_Merna_Grupa_Accounts']:
+            user_id = str(user['user_id']).strip()
+            if user_id != 'None':
+                password = str(user['password'])
+                alias = str(user['alias']).strip()
+                if alias == 'None':
+                    alias = user_id
+                self.edb_merna_grupa_accounts.append(Account(user_id, password, alias))
 
     def setup_infostan_accounts(self) -> None:
         # Get all InfoStan accounts

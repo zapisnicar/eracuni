@@ -65,3 +65,10 @@ class Edb:
             # Logout
             logout_button = find_first_by_css(self.driver, 'a[title="Odjavljivanje sa sistema"]')
             logout_button.click()
+
+
+class MernaGrupa:
+    def __init__(self, driver: webdriver, config: Config, notifications: Notifications) -> None:
+        self.driver = driver
+        self.config = config
+        self.notifications = notifications
