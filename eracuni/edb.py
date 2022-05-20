@@ -9,18 +9,18 @@ from eracuni.browser import find_first_by_id, find_first_by_css, find_all_by_css
 from eracuni.messages import Notifications
 
 
-class Edb:
+class Domacinstva:
     def __init__(self, driver: webdriver, config: Config, notifications: Notifications) -> None:
         self.driver = driver
         self.config = config
         self.notifications = notifications
 
-        for account in self.config.edb_accounts:
-            storage = Storage(f'edb_{account.alias}')
+        for account in self.config.edb_domacinstva_accounts:
+            storage = Storage(f'edb_domacinstva_{account.alias}')
 
             # Load main page
             try:
-                self.driver.get(self.config.edb_url)
+                self.driver.get(self.config.edb_domacinstva_url)
             except Exception as e:
                 print('Error loading page', file=sys.stderr)
                 self.driver.quit()
@@ -53,7 +53,7 @@ class Edb:
             # Anything new?
             if period != storage.last_saved:
                 # Add notification
-                self.notifications.add(f'EDB ({account.alias}) za {period.lower()}')
+                self.notifications.add(f'EDB Domaćinstva ({account.alias}) za {period.lower()}')
                 # Save PDF with click on last cell in row 1
                 save_button = find_first_by_css(invoices[1], 'td:last-child')
                 save_button.click()

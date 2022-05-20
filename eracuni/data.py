@@ -32,12 +32,12 @@ class Config:
     """
     Read configuration file, config.yaml:
 
-    EDB_Accounts:       List of EDB accounts
-      - user_id:        user id
-        password:       user password
-        alias:          alias, like home or garage
-      - user_id:        other id
-        password:       other password
+    EDB_Domacinstva_Accounts:   List of EDB Domacinstva accounts
+      - user_id:                user id
+        password:               user password
+        alias:                  alias, like home or garage
+      - user_id:                other id
+        password:               other password
         alias:
       - user_id:
         password:
@@ -65,8 +65,8 @@ class Config:
         password:
         alias:
 
-    EDB_address:                EDB Login page address
-    EDB_merna_grupa_address:    EDB merna grupa login address
+    EDB_domacinstva_address:    EDB domacinstva Login page address
+    EDB_merna_grupa_address:    EDB merna grupa Login page address
     InfoStan_address:           InfoStan Login page address
     headless:                   To start without GUI or not, True or False
     user_agent:                 Browser identifier string
@@ -91,9 +91,9 @@ class Config:
         with open('config.yaml') as f:
             self.yaml_cfg: Dict[str, Any] = yaml.full_load(f)
 
-        self.edb_accounts: List[Account] = []
-        self.setup_edb_accounts()
-        self.edb_url: str = self.yaml_cfg['EDB_address']
+        self.edb_domacinstva_accounts: List[Account] = []
+        self.setup_edb_domacinstva_accounts()
+        self.edb_domacinstva_url: str = self.yaml_cfg['EDB_domacinstva_address']
 
         self.edb_merna_grupa_accounts: List[Account] = []
         self.setup_edb_merna_grupa_accounts()
@@ -118,16 +118,16 @@ class Config:
         self.telegram_bot_token: str = self.yaml_cfg['telegram_bot_token']
         self.telegram_chat_id: str = str(self.yaml_cfg['telegram_chat_id'])
 
-    def setup_edb_accounts(self) -> None:
+    def setup_edb_domacinstva_accounts(self) -> None:
         # Get all EDB accounts
-        for user in self.yaml_cfg['EDB_Accounts']:
+        for user in self.yaml_cfg['EDB_Domacinstva_Accounts']:
             user_id = str(user['user_id']).strip()
             if user_id != 'None':
                 password = str(user['password'])
                 alias = str(user['alias']).strip()
                 if alias == 'None':
                     alias = user_id
-                self.edb_accounts.append(Account(user_id, password, alias))
+                self.edb_domacinstva_accounts.append(Account(user_id, password, alias))
 
     def setup_edb_merna_grupa_accounts(self) -> None:
         # Get all EDB merna grupa accounts
