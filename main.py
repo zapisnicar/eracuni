@@ -17,7 +17,7 @@ Ako je došlo do greške u parsiranju web stranice, ispiši problem na stderr i 
 
 from eracuni.data import Config
 from eracuni.browser import firefox
-from eracuni.edb import Edb
+from eracuni.edb import Domacinstva, MernaGrupa
 from eracuni.infostan import Infostan
 from eracuni.messages import Notifications
 
@@ -30,8 +30,11 @@ def main() -> None:
     # Start browser
     browser = firefox(config)
 
-    # Check EDB bills
-    Edb(browser, config, notifications)
+    # Check EDB Domacinstva bills
+    Domacinstva(browser, config, notifications)
+
+    # Check EDB Merna Grupa bills
+    MernaGrupa(browser, config, notifications)
 
     # Check InfoStan bills
     Infostan(browser, config, notifications)
