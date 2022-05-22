@@ -1,7 +1,17 @@
-EDB_Accounts:
+EDB_Domacinstva_Accounts:
   - user_id: some_id
     password: some_password
     alias: home
+  - user_id:
+    password:
+    alias
+  - user_id:
+    password:
+    alias:
+EDB_Merna_Grupa_Accounts:
+  - user_id: some_id
+    password: some_password
+    alias: work
   - user_id:
     password:
     alias:
@@ -9,7 +19,7 @@ EDB_Accounts:
     password:
     alias:
 InfoStan_Accounts:
-  - username: some_username
+  - username: some_id
     password: some_password
     alias:
   - username:
@@ -18,7 +28,8 @@ InfoStan_Accounts:
   - username:
     password:
     alias:
-EDB_address: http://portal.edb.rs/domportal_js/faces/common/Login.jspx
+EDB_domacinstva_address: http://portal.edb.rs/domportal_js/faces/common/Login.jspx
+EDB_merna_grupa_address: http://portal.edb.rs/virmportaljs/faces/common/Login.jspx
 InfoStan_address: https://esanduce.rs/prijava
 headless: True
 user_agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/10.0
