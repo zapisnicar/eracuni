@@ -33,7 +33,7 @@ EDB_merna_grupa_address: http://portal.edb.rs/virmportaljs/faces/common/Login.js
 InfoStan_address: https://esanduce.rs/prijava
 headless: True
 user_agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/10.0
-timeout: 10
+timeout: 30
 email_enabled: False
 email_address: sender@gmail.com
 email_password: your_password
