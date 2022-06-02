@@ -16,7 +16,7 @@ class Domacinstva:
         self.notifications = notifications
 
         for account in self.config.edb_domacinstva_accounts:
-            storage = Storage(f'edb_domacinstva_{account.alias}')
+            storage = Storage(f'edb_dom_{account.alias}')
 
             # Load main page
             try:
@@ -74,7 +74,7 @@ class MernaGrupa:
         self.notifications = notifications
 
         for account in self.config.edb_merna_grupa_accounts:
-            storage = Storage(f'edb_merna_grupa_{account.alias}')
+            storage = Storage(f'edb_mg_{account.alias}')
 
             # Load main page
             try:
