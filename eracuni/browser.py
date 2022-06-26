@@ -7,6 +7,7 @@ import os
 import sys
 from typing import List, Any
 from selenium import webdriver  # type: ignore
+from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.options import Options  # type: ignore
 from selenium.common.exceptions import NoSuchElementException  # type: ignore
 from eracuni.data import Config
@@ -45,7 +46,7 @@ def find_first_by_id(browser: webdriver, target: str) -> webdriver:
     Catch No Such Element Exception error, report problem to stderr and quit with exit code 1
     """
     try:
-        element = browser.find_element_by_id(target)
+        element = browser.find_element(By.ID, target)
         return element
     except NoSuchElementException:
         print(f"Can't find id: {target}", file=sys.stderr)
@@ -60,7 +61,7 @@ def find_first_by_css(browser: webdriver, target: str) -> webdriver:
     Catch No Such Element Exception error, report problem to stderr and quit with exit code 1
     """
     try:
-        element = browser.find_element_by_css_selector(target)
+        element = browser.find_element(By.CSS_SELECTOR, target)
         return element
     except NoSuchElementException:
         print(f"Can't find CSS selector: {target}", file=sys.stderr)
@@ -75,7 +76,7 @@ def find_all_by_css(browser: webdriver, target: str) -> List[Any]:
     Catch No Such Element Exception error, report problem to stderr and quit with exit code 1
     """
     try:
-        elements = browser.find_elements_by_css_selector(target)
+        elements = browser.find_elements(By.CSS_SELECTOR, target)
         return elements
     except NoSuchElementException:
         print(f"Can't find CSS selector: {target}", file=sys.stderr)
