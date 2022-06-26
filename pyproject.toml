@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "eracuni"
+version = "0.2.0"
+description = "Utility bills scraper (Serbian)"
+authors = ["zapisnicar <8794916+zapisnicar@users.noreply.github.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+PyYAML = "^6.0"
+selenium = "^4.3.0"
+requests = "^2.28.0"
+
+[tool.poetry.dev-dependencies]
+pytest = "^7.1.2"
+mypy = "^0.961"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
