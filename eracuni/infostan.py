@@ -54,8 +54,8 @@ class Infostan:
                     self.driver, f'.container-page > div:nth-child(4) > div:nth-child({i}) > div:nth-child(1)')
                 row_i.click()
 
-                # Find top row, with last bill
-                last_row = find_first_by_css(self.driver, 'div.row-item')
+                # # Find top row, with last bill
+                last_row = find_first_by_css(self.driver, 'div.table-row')
                 last_bill_date = find_first_by_css(last_row, '.rowItemName > a').get_attribute('text').strip()
 
                 # Anything new?
